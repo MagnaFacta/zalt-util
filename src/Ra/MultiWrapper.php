@@ -34,9 +34,9 @@ class MultiWrapper implements ArrayAccess
     /**
      * The items that will be treated as one.
      *
-     * @var Traversable
+     * @var array|Traversable
      */
-    protected Traversable $_array;
+    protected array|Traversable $_array;
 
     /**
      * The class name used to create new class instances for function call results
@@ -67,14 +67,14 @@ class MultiWrapper implements ArrayAccess
      *
      * @param array|Traversable $array
      */
-    public function __construct(mixed $array)
+    public function __construct(array|Traversable $array)
     {
         $this->_array = $array;
     }
 
     public function __get($name)
     {
-        $result = array();
+        $result = [];
 
         foreach ($this->_array as $key => $obj) {
             // Return only for those that have the property

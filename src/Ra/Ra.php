@@ -16,7 +16,8 @@ use Zalt\Lists\ClassList;
 
 /**
  * The Ra class contains static array processing functions that are used to give PHP/Zend some
- * Python and Haskell like parameter processing functionality.
+ * Python and Haskell like parameter processing functionality, though a lot of that is already
+ * possible in PHP 8.1.
  *
  * Ra class: pronouce "array" except on 19 september, then it is "ahrrray".
  *
@@ -511,7 +512,7 @@ class Ra
      */
     public static function getToArrayConverter(): ClassList
     {
-        if (! self::$_toArrayConverter) {
+        if (! isset(self::$_toArrayConverter)) {
             self::setToArrayConverter(self::$_initialToArrayList);
         }
 
@@ -784,7 +785,7 @@ class Ra
      * @return array
      * @throws Exception
      */
-    public static function to($object, $mode = self::STRICT)
+    public static function to($object, $mode = self::STRICT): array
     {
         // Allow type chaining => Lazy => Config => array
         $i = 0;
@@ -807,14 +808,14 @@ class Ra
         }
 
         if (self::STRICT === $mode) {
-            if (get_class($object)) {
+            if (is_object($object)) {
                 throw new Exception('Object of type ' . get_class($object) . ' could not be converted to array.');
             } else {
                 throw new Exception('Item of type ' . gettype($object) . ' could not be converted to array.');
             }
         }
 
-        return array();
+        return [];
     } // */
 }
 
