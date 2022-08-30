@@ -1,0 +1,31 @@
+{
+    "name": "magnafacta/zalt-util",
+    "description": "Alternative Utilities",
+    "type": "library",
+    "require": {
+        "php": ">=8.1.0",
+        "mezzio/mezzio-flash": "^1.3",
+        "psr/container": "^1.0 || ^2.0",
+        "symfony/translation": "^6.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "9.*"
+    },
+    "authors": [
+        {
+            "name": "Matijs de Jong",
+            "email": "mjong@magnafacta.nl"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Zalt\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Zalt\\": "test\\"
+        }
+    }
+}
