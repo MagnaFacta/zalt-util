@@ -591,7 +591,7 @@ class Ra
     /**
      * @param array $value
      * @return bool True when there is an array in the value
-     * /
+     */
     public static function isMultiDimensional(array $value)
     {
         foreach ($value as $val) {

@@ -11,6 +11,10 @@ part of an installation to urls.
 
 Simple lookup lists that return something (or null) on a key. With sub objects for use with functions and objects.
 
+## Mock
+
+Mock objects for easy implementation of unit test where ServiceManagers or Translators are needed
+
 ## Ra
 
 The Ra package is pronouced "array" except on 19 september, then it is "ahrrray".

@@ -28,6 +28,23 @@ class RaTest extends TestCase
     {
         return get_object_vars($object);
     }
+
+    public function isMultiDimensionalDataProvider()
+    {
+        return [
+            [['a', ['b']], true],
+            [['a', 'b', []], true],
+            [['a', 'b'], false],
+        ];
+    }
+
+    /**
+     * @dataProvider isMultiDimensionalDataProvider
+     */
+    public function testIsMultiDimensional($array, $test)
+    {
+        $this->assertEquals($test, Ra::isMultiDimensional($array));
+    }
     
     public function testToArray()
     {
