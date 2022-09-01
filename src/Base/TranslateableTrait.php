@@ -7,7 +7,7 @@
  * @author     Matijs de Jong <mjong@magnafacta.nl>
  */
 
-namespace Zalt\HtmlUtil;
+namespace Zalt\Base;
 
 use InvalidArgumentException;
 use Symfony\Contracts\Translation\TranslatorInterface;
