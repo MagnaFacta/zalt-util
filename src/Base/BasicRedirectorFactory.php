@@ -21,7 +21,7 @@ use Psr\Container\ContainerInterface;
  */
 class BasicRedirectorFactory
 {
-    public function __invoke(ContainerInterface $container): BaseUrl
+    public function __invoke(ContainerInterface $container): BasicRedirector
     {
         return new BasicRedirector();
     }
