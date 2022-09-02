@@ -20,7 +20,7 @@ use stdClass;
  *
  * @package    Zalt
  * @subpackage Ra
- * @since      Class available since version 1.9.2
+ * @since      Class available since version 1.0
  */
 class RaTest extends TestCase
 {

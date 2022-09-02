@@ -19,7 +19,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  * 
  * @package    Zalt
  * @subpackage Mock
- * @since      Class available since version 1.9.2
+ * @since      Class available since version 1.0
  */
 class PotemkinTranslator implements TranslatorInterface
 {

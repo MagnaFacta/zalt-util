@@ -11,13 +11,18 @@ declare(strict_types=1);
 
 namespace Zalt\Base;
 
+use Psr\Container\ContainerInterface;
+
 /**
  *
  * @package    Zalt
  * @subpackage Base
  * @since      Class available since version 1.0
  */
-interface RedirectorInterface
+class BasicRedirectorFactory
 {
-    public function redirect(string $url, int $code = 200): void;
+    public function __invoke(ContainerInterface $container): BaseUrl
+    {
+        return new BasicRedirector();
+    }
 }

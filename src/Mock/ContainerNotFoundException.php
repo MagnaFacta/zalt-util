@@ -17,7 +17,7 @@ use Psr\Container\NotFoundExceptionInterface;
  *
  * @package    Zalt
  * @subpackage Mock
- * @since      Class available since version 1.9.2
+ * @since      Class available since version 1.0
  */
 class ContainerNotFoundException extends \Exception implements NotFoundExceptionInterface
 { }

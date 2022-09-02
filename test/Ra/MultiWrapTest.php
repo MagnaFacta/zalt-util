@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @package    Zalt
  * @subpackage Ra
- * @since      Class available since version 1.9.2
+ * @since      Class available since version 1.0
  */
 class MultiWrapTest extends TestCase
 {

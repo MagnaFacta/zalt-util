@@ -18,7 +18,7 @@ use Psr\Container\NotFoundExceptionInterface;
  *
  * @package    Zalt
  * @subpackage Mock
- * @since      Class available since version 1.9.2
+ * @since      Class available since version 1.0
  */
 class SimpleServiceManager implements ContainerInterface
 {
@@ -37,7 +37,7 @@ class SimpleServiceManager implements ContainerInterface
             return $this->objects[$id];
         }
 
-        throw new ContainerNotFoundException("id $id not found!");
+        throw new ContainerNotFoundException("Container id '$id' not found!");
     }
 
     /**
