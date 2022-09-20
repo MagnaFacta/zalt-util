@@ -29,14 +29,18 @@ class ConfigProvider
     public function getDependencies(): array
     {
         return [
-            // Legacy MUtil Framework aliases
+
             'aliases'    => [
-                '\MUtil\View\Helper\BaseUrl' => BaseUrl::class,
+                '\MUtil\View\Helper\BaseUrl' => BaseUrl::class, // Legacy MUtil Framework aliases
+                RedirectorInterface::class => BasicRedirector::class
+            ],
+            'factories' => [
+                BaseUrl::class => BaseUrlFactory::class,
             ],
             'invokables' => [
-                BaseUrl::class => BaseUrlFactory::class,
-                RedirectorInterface::class => BasicRedirectorFactory::class
+                BasicRedirector::class => BasicRedirector::class
             ],
+
         ];
     }
 
