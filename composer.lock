@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9f03f4f0b22aae8fb252382c5d5d9a15",
+    "content-hash": "aa9648b2f36c6d24dfe2e90a694b7c73",
     "packages": [
         {
             "name": "dflydev/fig-cookies",
@@ -68,6 +68,63 @@
                 "source": "https://github.com/dflydev/dflydev-fig-cookies/tree/main"
             },
             "time": "2022-01-25T17:30:35+00:00"
+        },
+        {
+            "name": "fig/http-message-util",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/http-message-util.git",
+                "reference": "9d94dc0154230ac39e5bf89398b324a86f63f765"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/http-message-util/zipball/9d94dc0154230ac39e5bf89398b324a86f63f765",
+                "reference": "9d94dc0154230ac39e5bf89398b324a86f63f765",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3 || ^7.0 || ^8.0"
+            },
+            "suggest": {
+                "psr/http-message": "The package containing the PSR-7 interfaces"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Fig\\Http\\Message\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Utility classes and constants for use with PSR-7 (psr/http-message)",
+            "keywords": [
+                "http",
+                "http-message",
+                "psr",
+                "psr-7",
+                "request",
+                "response"
+            ],
+            "support": {
+                "issues": "https://github.com/php-fig/http-message-util/issues",
+                "source": "https://github.com/php-fig/http-message-util/tree/1.1.5"
+            },
+            "time": "2020-11-24T22:02:12+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -191,29 +248,31 @@
         },
         {
             "name": "mezzio/mezzio-flash",
-            "version": "1.4.x-dev",
+            "version": "1.6.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mezzio/mezzio-flash.git",
-                "reference": "9e07ce683ead671c0ee2be9ea26ea1e24d2b6808"
+                "reference": "fc3303d4c461350012dcbfa9eb1793e617930233"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mezzio/mezzio-flash/zipball/9e07ce683ead671c0ee2be9ea26ea1e24d2b6808",
-                "reference": "9e07ce683ead671c0ee2be9ea26ea1e24d2b6808",
+                "url": "https://api.github.com/repos/mezzio/mezzio-flash/zipball/fc3303d4c461350012dcbfa9eb1793e617930233",
+                "reference": "fc3303d4c461350012dcbfa9eb1793e617930233",
                 "shasum": ""
             },
             "require": {
                 "mezzio/mezzio-session": "^1.0",
-                "php": "^7.3 || ~8.0.0 || ~8.1.0",
+                "php": "^7.4 || ~8.0.0 || ~8.1.0",
                 "psr/http-server-middleware": "^1.0"
             },
             "conflict": {
                 "zendframework/zend-expressive-flash": "*"
             },
             "require-dev": {
-                "laminas/laminas-coding-standard": "~2.2.0",
-                "phpunit/phpunit": "^9.3"
+                "laminas/laminas-coding-standard": "~2.4.0",
+                "phpunit/phpunit": "^9.5.24",
+                "psalm/plugin-phpunit": "^0.17.0",
+                "vimeo/psalm": "^4.9"
             },
             "default-branch": true,
             "type": "library",
@@ -256,34 +315,193 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-03-08T14:53:12+00:00"
+            "time": "2022-10-08T01:41:09+00:00"
         },
         {
-            "name": "mezzio/mezzio-session",
-            "version": "1.10.x-dev",
+            "name": "mezzio/mezzio-helpers",
+            "version": "5.10.x-dev",
             "source": {
                 "type": "git",
-                "url": "https://github.com/mezzio/mezzio-session.git",
-                "reference": "197e5c3aa932083d637076536a2a752abb1a5796"
+                "url": "https://github.com/mezzio/mezzio-helpers.git",
+                "reference": "b7b4d67a832a7c99161bc6208b99f8c47c18ca3f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mezzio/mezzio-session/zipball/197e5c3aa932083d637076536a2a752abb1a5796",
-                "reference": "197e5c3aa932083d637076536a2a752abb1a5796",
+                "url": "https://api.github.com/repos/mezzio/mezzio-helpers/zipball/b7b4d67a832a7c99161bc6208b99f8c47c18ca3f",
+                "reference": "b7b4d67a832a7c99161bc6208b99f8c47c18ca3f",
+                "shasum": ""
+            },
+            "require": {
+                "mezzio/mezzio-router": "^3.0",
+                "php": "^7.4 || ~8.0.0 || ~8.1.0",
+                "psr/container": "^1.0 || ^2.0",
+                "psr/http-message": "^1.0.1",
+                "psr/http-server-middleware": "^1.0"
+            },
+            "conflict": {
+                "zendframework/zend-expressive-helpers": "*"
+            },
+            "require-dev": {
+                "ext-json": "*",
+                "laminas/laminas-coding-standard": "~2.4.0",
+                "laminas/laminas-diactoros": "^2.11.1",
+                "phpunit/phpunit": "^9.5.11",
+                "psalm/plugin-phpunit": "^0.17.0",
+                "vimeo/psalm": "^4.17"
+            },
+            "suggest": {
+                "ext-json": "If you wish to use the JsonStrategy with BodyParamsMiddleware"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laminas": {
+                    "config-provider": "Mezzio\\Helper\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Mezzio\\Helper\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Helper/Utility classes for Mezzio",
+            "homepage": "https://mezzio.dev",
+            "keywords": [
+                "http",
+                "laminas",
+                "mezzio",
+                "middleware",
+                "psr",
+                "psr-7"
+            ],
+            "support": {
+                "chat": "https://laminas.dev/chat",
+                "docs": "https://docs.mezzio.dev/mezzio/features/helpers/intro/",
+                "forum": "https://discourse.laminas.dev",
+                "issues": "https://github.com/mezzio/mezzio-helpers/issues",
+                "rss": "https://github.com/mezzio/mezzio-helpers/releases.atom",
+                "source": "https://github.com/mezzio/mezzio-helpers"
+            },
+            "funding": [
+                {
+                    "url": "https://funding.communitybridge.org/projects/laminas-project",
+                    "type": "community_bridge"
+                }
+            ],
+            "time": "2022-10-09T01:20:55+00:00"
+        },
+        {
+            "name": "mezzio/mezzio-router",
+            "version": "3.9.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mezzio/mezzio-router.git",
+                "reference": "9669e5bb9ad979badbaf38af335b6ce65a67c8e8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mezzio/mezzio-router/zipball/9669e5bb9ad979badbaf38af335b6ce65a67c8e8",
+                "reference": "9669e5bb9ad979badbaf38af335b6ce65a67c8e8",
+                "shasum": ""
+            },
+            "require": {
+                "fig/http-message-util": "^1.1.2",
+                "php": "^7.4 || ~8.0.0 || ~8.1.0",
+                "psr/container": "^1.0 || ^2.0",
+                "psr/http-factory": "^1.0",
+                "psr/http-message": "^1.0.1",
+                "psr/http-server-middleware": "^1.0",
+                "webmozart/assert": "^1.10"
+            },
+            "conflict": {
+                "mezzio/mezzio": "<3.5",
+                "zendframework/zend-expressive-router": "*"
+            },
+            "require-dev": {
+                "laminas/laminas-coding-standard": "~2.4.0",
+                "laminas/laminas-diactoros": "^2.11",
+                "laminas/laminas-stratigility": "^3.4",
+                "phpunit/phpunit": "^9.5.11",
+                "psalm/plugin-phpunit": "^0.17.0",
+                "vimeo/psalm": "^4.17"
+            },
+            "suggest": {
+                "mezzio/mezzio-aurarouter": "^3.0 to use the Aura.Router routing adapter",
+                "mezzio/mezzio-fastroute": "^3.0 to use the FastRoute routing adapter",
+                "mezzio/mezzio-laminasrouter": "^3.0 to use the laminas-router routing adapter"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laminas": {
+                    "config-provider": "Mezzio\\Router\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Mezzio\\Router\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Router subcomponent for Mezzio",
+            "homepage": "https://mezzio.dev",
+            "keywords": [
+                "http",
+                "laminas",
+                "mezzio",
+                "middleware",
+                "psr",
+                "psr-7"
+            ],
+            "support": {
+                "chat": "https://laminas.dev/chat",
+                "docs": "https://docs.mezzio.dev/mezzio/features/router/intro/",
+                "forum": "https://discourse.laminas.dev",
+                "issues": "https://github.com/mezzio/mezzio-router/issues",
+                "rss": "https://github.com/mezzio/mezzio-router/releases.atom",
+                "source": "https://github.com/mezzio/mezzio-router"
+            },
+            "funding": [
+                {
+                    "url": "https://funding.communitybridge.org/projects/laminas-project",
+                    "type": "community_bridge"
+                }
+            ],
+            "time": "2022-10-09T12:43:04+00:00"
+        },
+        {
+            "name": "mezzio/mezzio-session",
+            "version": "1.12.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mezzio/mezzio-session.git",
+                "reference": "39a859eb0e5939b31c4ca4adc2eee393694811a1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mezzio/mezzio-session/zipball/39a859eb0e5939b31c4ca4adc2eee393694811a1",
+                "reference": "39a859eb0e5939b31c4ca4adc2eee393694811a1",
                 "shasum": ""
             },
             "require": {
                 "dflydev/fig-cookies": "^2.0.1 || ^3.0",
                 "ext-json": "*",
-                "php": "^7.3 || ~8.0.0 || ~8.1.0",
-                "psr/container": "^1.0|^2.0",
+                "php": "^7.4 || ~8.0.0 || ~8.1.0",
+                "psr/container": "^1.0 || ^2.0",
                 "psr/http-server-middleware": "^1.0"
             },
             "conflict": {
                 "zendframework/zend-expressive-session": "*"
             },
             "require-dev": {
-                "laminas/laminas-coding-standard": "~2.3.0",
+                "laminas/laminas-coding-standard": "~2.4.0",
                 "laminas/laminas-diactoros": "^2.2",
                 "phpunit/phpunit": "^9.5",
                 "psalm/plugin-phpunit": "^0.17.0",
@@ -333,26 +551,26 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-07-29T14:54:34+00:00"
+            "time": "2022-10-08T01:11:39+00:00"
         },
         {
             "name": "mezzio/mezzio-session-cache",
-            "version": "1.9.x-dev",
+            "version": "1.10.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mezzio/mezzio-session-cache.git",
-                "reference": "4bf5023b57575cebcb126d9f2d6e33e6af8bc71b"
+                "reference": "e9035175fdb8813812573babbc5517cd5b955677"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mezzio/mezzio-session-cache/zipball/4bf5023b57575cebcb126d9f2d6e33e6af8bc71b",
-                "reference": "4bf5023b57575cebcb126d9f2d6e33e6af8bc71b",
+                "url": "https://api.github.com/repos/mezzio/mezzio-session-cache/zipball/e9035175fdb8813812573babbc5517cd5b955677",
+                "reference": "e9035175fdb8813812573babbc5517cd5b955677",
                 "shasum": ""
             },
             "require": {
                 "dflydev/fig-cookies": "^2.0.1 || ^3.0.0",
                 "mezzio/mezzio-session": "^1.4",
-                "php": "^7.3 || ~8.0.0 || ~8.1.0",
+                "php": "^7.4 || ~8.0.0 || ~8.1.0",
                 "psr/cache": "^1.0 || ^2.0 || ^3.0",
                 "psr/container": "^1.0 || ^2.0 || ^3.0"
             },
@@ -360,11 +578,13 @@
                 "zendframework/zend-expressive-session-cache": "*"
             },
             "require-dev": {
-                "laminas/laminas-coding-standard": "~2.3.0",
-                "laminas/laminas-diactoros": "^2.13.0",
-                "phpunit/phpunit": "^9.5",
+                "laminas/laminas-cache": "^3.4",
+                "laminas/laminas-cache-storage-adapter-apcu": "^2.1",
+                "laminas/laminas-coding-standard": "~2.4.0",
+                "laminas/laminas-diactoros": "^2.17.0",
+                "phpunit/phpunit": "^9.5.24",
                 "psalm/plugin-phpunit": "^0.17.0",
-                "vimeo/psalm": "^4.24.0"
+                "vimeo/psalm": "^4.27.0"
             },
             "suggest": {
                 "psr/cache-implementation": "This package requires a PSR-6 CacheItemPoolInterface implementation."
@@ -408,7 +628,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-07-28T11:21:17+00:00"
+            "time": "2022-10-02T01:52:59+00:00"
         },
         {
             "name": "psr/cache",
@@ -843,12 +1063,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/cache.git",
-                "reference": "66c4521c7430faa103a1eccef5b3bfa624afa335"
+                "reference": "275664cbae92fc1b65860c555821116a8d0b0c7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/cache/zipball/66c4521c7430faa103a1eccef5b3bfa624afa335",
-                "reference": "66c4521c7430faa103a1eccef5b3bfa624afa335",
+                "url": "https://api.github.com/repos/symfony/cache/zipball/275664cbae92fc1b65860c555821116a8d0b0c7c",
+                "reference": "275664cbae92fc1b65860c555821116a8d0b0c7c",
                 "shasum": ""
             },
             "require": {
@@ -857,7 +1077,7 @@
                 "psr/log": "^1.1|^2|^3",
                 "symfony/cache-contracts": "^1.1.7|^2|^3",
                 "symfony/service-contracts": "^1.1|^2|^3",
-                "symfony/var-exporter": "^5.4|^6.0"
+                "symfony/var-exporter": "^6.2"
             },
             "conflict": {
                 "doctrine/dbal": "<2.13.1",
@@ -908,7 +1128,7 @@
                     "homepage": "https://symfony.com/contributors"
                 }
             ],
-            "description": "Provides an extended PSR-6, PSR-16 (and tags) implementation",
+            "description": "Provides extended PSR-6, PSR-16 (and tags) implementations",
             "homepage": "https://symfony.com",
             "keywords": [
                 "caching",
@@ -931,7 +1151,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-09-01T02:03:22+00:00"
+            "time": "2022-10-09T08:55:43+00:00"
         },
         {
             "name": "symfony/cache-contracts",
@@ -1189,12 +1409,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "ce1fa4321a99a777f36c4561df8f8dbe66f908a4"
+                "reference": "89c407bb283948fd9096764af547699a9bc33af7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/ce1fa4321a99a777f36c4561df8f8dbe66f908a4",
-                "reference": "ce1fa4321a99a777f36c4561df8f8dbe66f908a4",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/89c407bb283948fd9096764af547699a9bc33af7",
+                "reference": "89c407bb283948fd9096764af547699a9bc33af7",
                 "shasum": ""
             },
             "require": {
@@ -1277,7 +1497,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-08-26T15:23:18+00:00"
+            "time": "2022-10-07T08:04:14+00:00"
         },
         {
             "name": "symfony/translation-contracts",
@@ -1367,12 +1587,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-exporter.git",
-                "reference": "67d1c266d3e244c229c83200629294eae129cfb9"
+                "reference": "e6151f9f2d5231e72b870319209b4f1ba2c31ac5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/67d1c266d3e244c229c83200629294eae129cfb9",
-                "reference": "67d1c266d3e244c229c83200629294eae129cfb9",
+                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/e6151f9f2d5231e72b870319209b4f1ba2c31ac5",
+                "reference": "e6151f9f2d5231e72b870319209b4f1ba2c31ac5",
                 "shasum": ""
             },
             "require": {
@@ -1412,6 +1632,8 @@
                 "export",
                 "hydrate",
                 "instantiate",
+                "lazy loading",
+                "proxy",
                 "serialize"
             ],
             "support": {
@@ -1431,7 +1653,65 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-09-01T02:03:18+00:00"
+            "time": "2022-10-02T10:37:55+00:00"
+        },
+        {
+            "name": "webmozart/assert",
+            "version": "1.11.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webmozarts/assert.git",
+                "reference": "11cb2199493b2f8a3b53e7f19068fc6aac760991"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webmozarts/assert/zipball/11cb2199493b2f8a3b53e7f19068fc6aac760991",
+                "reference": "11cb2199493b2f8a3b53e7f19068fc6aac760991",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "php": "^7.2 || ^8.0"
+            },
+            "conflict": {
+                "phpstan/phpstan": "<0.12.20",
+                "vimeo/psalm": "<4.6.1 || 4.6.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.5.13"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.10-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Webmozart\\Assert\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bernhard Schussek",
+                    "email": "bschussek@gmail.com"
+                }
+            ],
+            "description": "Assertions to validate method input/output with nice error messages.",
+            "keywords": [
+                "assert",
+                "check",
+                "validate"
+            ],
+            "support": {
+                "issues": "https://github.com/webmozarts/assert/issues",
+                "source": "https://github.com/webmozarts/assert/tree/1.11.0"
+            },
+            "time": "2022-06-03T18:03:27+00:00"
         }
     ],
     "packages-dev": [
@@ -1571,12 +1851,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "2d589921f23d869846a52c541247e0bafca61ab3"
+                "reference": "2f1fd784fe5560675722a1e5cbbcece5f43bf3a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/2d589921f23d869846a52c541247e0bafca61ab3",
-                "reference": "2d589921f23d869846a52c541247e0bafca61ab3",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/2f1fd784fe5560675722a1e5cbbcece5f43bf3a0",
+                "reference": "2f1fd784fe5560675722a1e5cbbcece5f43bf3a0",
                 "shasum": ""
             },
             "require": {
@@ -1619,7 +1899,7 @@
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
                 "source": "https://github.com/nikic/PHP-Parser/tree/4.x"
             },
-            "time": "2022-06-04T10:44:36+00:00"
+            "time": "2022-09-10T20:41:13+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -1746,12 +2026,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "aa94dc41e8661fe90c7316849907cba3007b10d8"
+                "reference": "d9ac413b26c33fb3aabc997fc4e5d60a026ec38c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/aa94dc41e8661fe90c7316849907cba3007b10d8",
-                "reference": "aa94dc41e8661fe90c7316849907cba3007b10d8",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/d9ac413b26c33fb3aabc997fc4e5d60a026ec38c",
+                "reference": "d9ac413b26c33fb3aabc997fc4e5d60a026ec38c",
                 "shasum": ""
             },
             "require": {
@@ -1807,7 +2087,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.17"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2"
             },
             "funding": [
                 {
@@ -1815,7 +2095,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-08-30T12:24:04+00:00"
+            "time": "2022-10-09T08:49:39+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -2064,12 +2344,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "a9665c86ed857524838c99f91c94e2e91dc28199"
+                "reference": "8c21a5381a7218b9bcf9d7cb1b3a0230ec83a3c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a9665c86ed857524838c99f91c94e2e91dc28199",
-                "reference": "a9665c86ed857524838c99f91c94e2e91dc28199",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/8c21a5381a7218b9bcf9d7cb1b3a0230ec83a3c1",
+                "reference": "8c21a5381a7218b9bcf9d7cb1b3a0230ec83a3c1",
                 "shasum": ""
             },
             "require": {
@@ -2091,14 +2371,14 @@
                 "phpunit/php-timer": "^5.0.2",
                 "sebastian/cli-parser": "^1.0.1",
                 "sebastian/code-unit": "^1.0.6",
-                "sebastian/comparator": "^4.0.5",
+                "sebastian/comparator": "^4.0.8",
                 "sebastian/diff": "^4.0.3",
                 "sebastian/environment": "^5.1.3",
-                "sebastian/exporter": "^4.0.3",
+                "sebastian/exporter": "^4.0.5",
                 "sebastian/global-state": "^5.0.1",
                 "sebastian/object-enumerator": "^4.0.3",
                 "sebastian/resource-operations": "^3.0.3",
-                "sebastian/type": "^3.1",
+                "sebastian/type": "^3.2",
                 "sebastian/version": "^3.0.2"
             },
             "suggest": {
@@ -2152,9 +2432,13 @@
                 {
                     "url": "https://github.com/sebastianbergmann",
                     "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpunit/phpunit",
+                    "type": "tidelift"
                 }
             ],
-            "time": "2022-08-31T15:11:39+00:00"
+            "time": "2022-10-09T09:04:03+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -2325,16 +2609,16 @@
         },
         {
             "name": "sebastian/comparator",
-            "version": "4.0.6",
+            "version": "4.0.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "55f4261989e546dc112258c7a75935a81a7ce382"
+                "reference": "b247957a1c8dc81a671770f74b479c0a78a818f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/55f4261989e546dc112258c7a75935a81a7ce382",
-                "reference": "55f4261989e546dc112258c7a75935a81a7ce382",
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/b247957a1c8dc81a671770f74b479c0a78a818f1",
+                "reference": "b247957a1c8dc81a671770f74b479c0a78a818f1",
                 "shasum": ""
             },
             "require": {
@@ -2387,7 +2671,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/comparator/issues",
-                "source": "https://github.com/sebastianbergmann/comparator/tree/4.0.6"
+                "source": "https://github.com/sebastianbergmann/comparator/tree/4.0"
             },
             "funding": [
                 {
@@ -2395,7 +2679,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-26T15:49:45+00:00"
+            "time": "2022-09-14T12:46:14+00:00"
         },
         {
             "name": "sebastian/complexity",
@@ -2589,12 +2873,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/exporter.git",
-                "reference": "428c31e2ea8b292aa814bc460cf28d58eba4d2ba"
+                "reference": "ac230ed27f0f98f597c8a2b6eb7ac563af5e5b9d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/428c31e2ea8b292aa814bc460cf28d58eba4d2ba",
-                "reference": "428c31e2ea8b292aa814bc460cf28d58eba4d2ba",
+                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/ac230ed27f0f98f597c8a2b6eb7ac563af5e5b9d",
+                "reference": "ac230ed27f0f98f597c8a2b6eb7ac563af5e5b9d",
                 "shasum": ""
             },
             "require": {
@@ -2658,7 +2942,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-03-06T06:59:32+00:00"
+            "time": "2022-09-14T06:03:37+00:00"
         },
         {
             "name": "sebastian/global-state",
@@ -3013,16 +3297,16 @@
         },
         {
             "name": "sebastian/type",
-            "version": "3.1.x-dev",
+            "version": "3.2.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/type.git",
-                "reference": "fb44e1cc6e557418387ad815780360057e40753e"
+                "reference": "4d34b23933f255b0822758a44272222cac593eb4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/type/zipball/fb44e1cc6e557418387ad815780360057e40753e",
-                "reference": "fb44e1cc6e557418387ad815780360057e40753e",
+                "url": "https://api.github.com/repos/sebastianbergmann/type/zipball/4d34b23933f255b0822758a44272222cac593eb4",
+                "reference": "4d34b23933f255b0822758a44272222cac593eb4",
                 "shasum": ""
             },
             "require": {
@@ -3034,7 +3318,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.1-dev"
+                    "dev-master": "3.2-dev"
                 }
             },
             "autoload": {
@@ -3057,7 +3341,7 @@
             "homepage": "https://github.com/sebastianbergmann/type",
             "support": {
                 "issues": "https://github.com/sebastianbergmann/type/issues",
-                "source": "https://github.com/sebastianbergmann/type/tree/3.1.0"
+                "source": "https://github.com/sebastianbergmann/type/tree/3.2"
             },
             "funding": [
                 {
@@ -3065,7 +3349,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-08-29T06:55:37+00:00"
+            "time": "2022-10-01T05:56:17+00:00"
         },
         {
             "name": "sebastian/version",

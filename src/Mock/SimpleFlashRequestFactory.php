@@ -28,6 +28,13 @@ class SimpleFlashRequestFactory implements InvokeWithoutServiceManager
     static public function createWithoutServiceManager(string $url = '/')
     {
         $request = new ServerRequest('GET', $url);
+
+        // Parsing of the uri query string does not happen automatically in Guzzlehttp
+        if ($request->getUri()->getQuery()) {
+            $queryParams = [];
+            \parse_str($request->getUri()->getQuery(), $queryParams);
+            $request = $request->withQueryParams($queryParams);
+        }
         
         $smWare = new SessionMiddleware(
             SimpleCacheSessionPersistenceFactory::createWithoutServiceManager()

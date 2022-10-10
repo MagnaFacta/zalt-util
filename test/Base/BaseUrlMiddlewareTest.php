@@ -11,9 +11,12 @@ declare(strict_types=1);
 
 namespace Zalt\Base;
 
+use Mezzio\Helper\UrlHelper;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use Zalt\Mock\SimpleFlashRequestFactory;
+use Zalt\Mock\SimpleRequestHandler;
+use Zalt\Mock\SimpleRouter;
 use Zalt\Mock\SimpleServiceManager;
 
 /**
@@ -22,7 +25,7 @@ use Zalt\Mock\SimpleServiceManager;
  * @subpackage Base
  * @since      Class available since version 1.0
  */
-class BaseUrlFactoryTest extends TestCase
+class BaseUrlMiddlewareTest extends TestCase
 {
     public function baseExtractionProvider()
     {
@@ -47,13 +50,12 @@ class BaseUrlFactoryTest extends TestCase
      */
     public function testBaseExtraction(string $inputUrl, string $expected)
     {
-        $classes = [
-            ServerRequestInterface::class => SimpleFlashRequestFactory::createWithoutServiceManager($inputUrl),
-        ];
-        $sm = new SimpleServiceManager($classes);
-
-        $buf = new BaseUrlFactory();
-        $baseurl = $buf($sm);
+        $buf     = new BaseUrlFinder();
+        $request = SimpleFlashRequestFactory::createWithoutServiceManager($inputUrl);
+        
+        $bum = new BaseUrlMiddleware($buf, new UrlHelper(new SimpleRouter()));
+        $bum->process($request, SimpleRequestHandler::getInstance());
+        $baseurl = $bum->getBaseUrl();
         
         $this->assertEquals($expected, $baseurl->getBaseUrl());
     }

@@ -10,10 +10,22 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class BaseUrlMiddleware implements MiddlewareInterface
 {
-
-    public function __construct(private BaseUrlFinder $baseUrlFinder, private UrlHelper $urlHelper)
+    /**
+     * @var ?\Zalt\Base\BaseUrl
+     */
+    protected $baseUrl;
+    
+    public function __construct(
+        private BaseUrlFinder $baseUrlFinder, 
+        private UrlHelper $urlHelper
+    )
     {}
 
+    public function getBaseUrl() : ?BaseUrl
+    {
+        return $this->baseUrl;
+    }
+    
     /**
      * Process an incoming server request.
      *
@@ -23,13 +35,12 @@ class BaseUrlMiddleware implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $baseUrl = $this->baseUrlFinder->findBaseUrl($request);
+        $this->baseUrl = $this->baseUrlFinder->findBaseUrl($request);
 
-        $this->urlHelper->setBasePath($baseUrl->getBaseUrl());
+        $this->urlHelper->setBasePath($this->baseUrl->getBaseUrl());
 
         //$request = $request->withAttribute(BaseUrl::class, $baseUrl);
 
         return $handler->handle($request);
     }
-
 }
