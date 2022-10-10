@@ -27,6 +27,7 @@ class RequestInfoFactory
     {
         $actionName         = null;
         $controllerName     = null;
+        $routeName          = null;
         $routeMatchedParams = [];
 
         $path = $request->getUri()->getPath();
@@ -43,7 +44,8 @@ class RequestInfoFactory
             
             $route = $routeResult->getMatchedRoute();
             if ($route instanceof Route) {
-                $options = $route->getOptions();
+                $routeName = $route->getName();
+                $options   = $route->getOptions();
 
                 if (isset($options['controller'])) {
                     $controllerName = $options['controller'];
@@ -57,6 +59,7 @@ class RequestInfoFactory
         $requestInfo = new RequestInfo(
             $controllerName, 
             $actionName,
+            $routeName,
             rtrim($baseUrl, '/\\') ?: '/',
             'POST' == $request->getMethod(),
             $routeMatchedParams,

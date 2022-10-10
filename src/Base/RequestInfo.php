@@ -24,6 +24,7 @@ class RequestInfo
     public function __construct(
         protected ?string $currentController,
         protected ?string $currentAction,
+        protected ?string $routeName,
         protected ?string $basePath = '',
         protected bool $isPost = false,
         protected array $requestMatchedParams = [],
@@ -95,6 +96,14 @@ class RequestInfo
         return $this->requestQueryParams;
     }
 
+    /**
+     * @return string|null
+     */
+    public function getRouteName(): ?string
+    {
+        return $this->routeName;
+    }
+    
     /**
      * @return bool is the current request a POST request?
      */
