@@ -32,15 +32,10 @@ class ConfigProvider
 
             'aliases'    => [
                 '\MUtil\View\Helper\BaseUrl' => BaseUrl::class, // Legacy MUtil Framework aliases
-                RedirectorInterface::class => BasicRedirector::class
             ],
             'factories' => [
                 BaseUrl::class => BaseUrlFactory::class,
             ],
-            'invokables' => [
-                BasicRedirector::class => BasicRedirector::class
-            ],
-
         ];
     }
 

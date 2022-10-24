@@ -9,9 +9,6 @@
 
 namespace Zalt\Message;
 
-use Mezzio\Flash\FlashMessagesInterface;
-use Psr\Http\Message\ServerRequestInterface;
-
 /**
  *
  * @package    Zalt
