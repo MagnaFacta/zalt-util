@@ -40,7 +40,7 @@ class MezzioFlashMessenger implements StatusMessengerInterface
         $storedMessages[$status->value] = array_merge($storedMessages[$status->value] ?? [], $messages);
 
         if ($now) {
-            $this->messenger->flashNow(static::FLASH_KEY, $storedMessages);
+            $this->messenger->flashNow(static::FLASH_KEY, $storedMessages, 0);
             return;
         }
         $this->messenger->flash(static::FLASH_KEY, $storedMessages);
@@ -102,7 +102,7 @@ class MezzioFlashMessenger implements StatusMessengerInterface
             $this->messenger->flash(static::FLASH_KEY, []);
             return;
         }
-        $this->messenger->flashNow(static::FLASH_KEY, []);
+        $this->messenger->flashNow(static::FLASH_KEY, [],0);
     }
 
     public function getMessages(?MessageStatus $status = null): array
