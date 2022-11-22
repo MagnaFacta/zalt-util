@@ -95,4 +95,18 @@ class MezzioFlashMessenger implements StatusMessengerInterface
     {
         $this->addMessages($messages, MessageStatus::Warning, $now);
     }
+
+    public function getMessages(?MessageStatus $status = null): array
+    {
+        $storedMessages = $this->messenger->getFlash(static::FLASH_KEY, []);
+        if ($status === null) {
+            return $storedMessages;
+        }
+
+        if (isset($storedMessages[$status])) {
+            return $storedMessages[$status];
+        }
+
+        return [];
+    }
 }

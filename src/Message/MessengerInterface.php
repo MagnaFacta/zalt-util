@@ -32,4 +32,11 @@ interface MessengerInterface
      * @param array $messages
      */
     public function addMessages(array $messages): void;
+
+    /**
+     * Get all messages
+     *
+     * @return array
+     */
+    public function getMessages(): array;
 }

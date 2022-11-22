@@ -27,4 +27,6 @@ interface StatusMessengerInterface extends MessengerInterface
     public function addWarning(string $message, bool $now = false): void;
 
     public function addWarnings(array $messages, bool $now = false): void;
+
+    public function getMessages(?MessageStatus $status = null): array;
 }
