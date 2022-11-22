@@ -22,7 +22,14 @@ interface MessengerInterface
     /**
      * Adds one message to the session based message store.
      *
-     * @param string $message_args Can be an array or multiple argemuents. Each sub element is a single message string
+     * @param string $message
      */
     public function addMessage(string $message): void;
+
+    /**
+     * Adds multiple messages to the session based message store.
+     *
+     * @param array $messages
+     */
+    public function addMessages(array $messages): void;
 }
