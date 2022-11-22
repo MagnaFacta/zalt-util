@@ -2,11 +2,11 @@
 
 namespace Zalt\Message;
 
-enum MessageStatus
+enum MessageStatus: string
 {
-    case Danger;
-    case Error;
-    case Info;
-    case Success;
-    case Warning;
+    case Danger = 'danger';
+    case Error = 'error';
+    case Info = 'info';
+    case Success = 'success';
+    case Warning = 'warning';
 }
