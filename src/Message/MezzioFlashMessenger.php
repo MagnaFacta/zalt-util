@@ -96,6 +96,15 @@ class MezzioFlashMessenger implements StatusMessengerInterface
         $this->addMessages($messages, MessageStatus::Warning, $now);
     }
 
+    public function clearMessages(bool $now = true): void
+    {
+        if (!$now) {
+            $this->messenger->flash(static::FLASH_KEY, []);
+            return;
+        }
+        $this->messenger->flashNow(static::FLASH_KEY, []);
+    }
+
     public function getMessages(?MessageStatus $status = null): array
     {
         $storedMessages = $this->messenger->getFlash(static::FLASH_KEY, []);
@@ -108,5 +117,10 @@ class MezzioFlashMessenger implements StatusMessengerInterface
         }
 
         return [];
+    }
+
+    public function prolong(): void
+    {
+        $this->messenger->prolongFlash();
     }
 }
