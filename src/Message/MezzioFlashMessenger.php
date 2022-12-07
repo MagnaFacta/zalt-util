@@ -58,12 +58,12 @@ class MezzioFlashMessenger implements StatusMessengerInterface
 
     public function addError(string $message, bool $now = false): void
     {
-        $this->addMessages([$message], MessageStatus::Error, $now);
+        $this->addMessages([$message], MessageStatus::Danger, $now);
     }
 
     public function addErrors(array $messages, bool $now = false): void
     {
-        $this->addMessages($messages, MessageStatus::Error, $now);
+        $this->addMessages($messages, MessageStatus::Danger, $now);
     }
 
     public function addInfo(string $message, bool $now = false): void
