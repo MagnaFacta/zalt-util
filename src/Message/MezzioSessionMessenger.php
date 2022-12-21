@@ -2,7 +2,7 @@
 
 namespace Zalt\Message;
 
-use Mezzio\Session\Session;
+use Mezzio\Session\SessionInterface;
 
 class MezzioSessionMessenger implements StatusMessengerInterface
 {
@@ -10,7 +10,7 @@ class MezzioSessionMessenger implements StatusMessengerInterface
 
     public const SESSION_KEY = 'status-messages';
 
-    public function __construct(protected Session $session)
+    public function __construct(protected SessionInterface $session)
     {}
     public function addMessage(string $message, MessageStatus $status = MessageStatus::Info): void
     {
