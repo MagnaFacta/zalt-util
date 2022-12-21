@@ -21,6 +21,7 @@ use Mezzio\Flash\FlashMessagesInterface;
  */
 class MezzioFlashMessenger implements StatusMessengerInterface
 {
+    use StatusMessengerTrait;
     public const FLASH_KEY = 'status-messages';
 
     public function __construct(
@@ -46,56 +47,6 @@ class MezzioFlashMessenger implements StatusMessengerInterface
         $this->messenger->flash(static::FLASH_KEY, $storedMessages);
     }
 
-    public function addDanger(string $message, bool $now = false): void
-    {
-        $this->addMessages([$message], MessageStatus::Danger, $now);
-    }
-
-    public function addDangers(array $messages, bool $now = false): void
-    {
-        $this->addMessages($messages, MessageStatus::Danger, $now);
-    }
-
-    public function addError(string $message, bool $now = false): void
-    {
-        $this->addMessages([$message], MessageStatus::Danger, $now);
-    }
-
-    public function addErrors(array $messages, bool $now = false): void
-    {
-        $this->addMessages($messages, MessageStatus::Danger, $now);
-    }
-
-    public function addInfo(string $message, bool $now = false): void
-    {
-        $this->addMessages([$message], MessageStatus::Info, $now);
-    }
-
-    public function addInfos(array $messages, bool $now = false): void
-    {
-        $this->addMessages($messages, MessageStatus::Info, $now);
-    }
-
-    public function addSuccess(string $message, bool $now = false): void
-    {
-        $this->addMessages([$message], MessageStatus::Success, $now);
-    }
-
-    public function addSuccesses(array $messages, bool $now = false): void
-    {
-        $this->addMessages($messages, MessageStatus::Success, $now);
-    }
-
-    public function addWarning(string $message, bool $now = false): void
-    {
-        $this->addMessages([$message], MessageStatus::Warning, $now);
-    }
-
-    public function addWarnings(array $messages, bool $now = false): void
-    {
-        $this->addMessages($messages, MessageStatus::Warning, $now);
-    }
-
     public function clearMessages(bool $now = true): void
     {
         if (!$now) {
@@ -105,9 +56,12 @@ class MezzioFlashMessenger implements StatusMessengerInterface
         $this->messenger->flashNow(static::FLASH_KEY, [],0);
     }
 
-    public function getMessages(?MessageStatus $status = null): array
+    public function getMessages(?MessageStatus $status = null, bool $keep = false): array
     {
         $storedMessages = $this->messenger->getFlash(static::FLASH_KEY, []);
+        if ($keep) {
+            $this->prolong();
+        }
         if ($status === null) {
             return $storedMessages;
         }
