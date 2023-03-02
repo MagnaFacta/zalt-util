@@ -27,7 +27,7 @@ trait TranslateableTrait
      *
      * @var TranslatorInterface
      */
-    protected $translate;
+    protected TranslatorInterface $translate;
 
     /**
      * Translates the given message.
