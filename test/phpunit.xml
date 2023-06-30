@@ -10,4 +10,10 @@
          verbose="true">
     <testsuite name="zalt-util">
     </testsuite>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">../src</directory>
+        </whitelist>
+    </filter>
 </phpunit>
