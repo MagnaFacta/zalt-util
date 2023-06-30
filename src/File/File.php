@@ -85,12 +85,12 @@ class File
      *
      * When no directory is used sys_get_temp_dir() is used and no cleanup is performed.
      *
-     * @param string $dir The directory for the files
+     * @param ?string $dir The directory for the files, system temp if null
      * @param string $prefix Optional prefix
      * @param int $keepFor The number of second a file is kept, use 0 for always
      * @return string The name of the temporary file
      */
-    public static function createTemporaryIn(?string $dir = null, ?string $prefix = null, int $keepFor = 86400): string
+    public static function createTemporaryIn(?string $dir = null, string $prefix = '', int $keepFor = 86400): string
     {
         $filename = self::getTemporaryIn($dir, $prefix, $keepFor);
 
@@ -176,12 +176,12 @@ class File
      *
      * When no directory is used sys_get_temp_dir() is used and no cleanup is performed.
      *
-     * @param string $dir The directory for the files
+     * @param ?string $dir The directory for the files, system temp if null
      * @param string $prefix Optional prefix
      * @param int $keepFor The number of second a file is kept, use 0 for always
      * @return string The name of the temporary file
      */
-    public static function getTemporaryIn(?string $dir = null, ?string $prefix = null, int $keepFor = 86400): string
+    public static function getTemporaryIn(?string $dir = null, string $prefix = '', int $keepFor = 86400): string
     {
         if (null === $dir) {
             $output = tempnam(sys_get_temp_dir(), $prefix);
