@@ -46,7 +46,7 @@ class File
      * @param string $filename
      * @return string
      */
-    public static function cleanupName(array $filename): string
+    public static function cleanupName(string $filename): string
     {
         return preg_replace('/[\|\\\?\*<\":>\+\[\]\/]\x00/', "_", $filename);
     }
