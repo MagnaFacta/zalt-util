@@ -33,9 +33,6 @@ class ConfigProvider
             'aliases'    => [
                 '\MUtil\View\Helper\BaseUrl' => BaseUrl::class, // Legacy MUtil Framework aliases
             ],
-            'factories' => [
-                BaseUrl::class => BaseUrlFactory::class,
-            ],
         ];
     }
 

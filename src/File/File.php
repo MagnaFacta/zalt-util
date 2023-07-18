@@ -219,7 +219,7 @@ class File
             return false;
         }
         // Quick checkes first and then something just in case
-        if (('\\' == $path[0]) || ('/' == $path[0]) || \MUtil\StringUtil\StringUtil::startsWith($path, DIRECTORY_SEPARATOR)) {
+        if (('\\' == $path[0]) || ('/' == $path[0]) || str_starts_with($path, DIRECTORY_SEPARATOR)) {
             return true;
         }
         // One more check for windows

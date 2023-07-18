@@ -2,3 +2,5 @@ composer.phar
 /vendor/
 /.idea
 /test/.phpunit.result.cache
+.phpunit.cache
+test/html-coverage

@@ -27,7 +27,7 @@ use Zalt\Mock\SimpleServiceManager;
  */
 class BaseUrlMiddlewareTest extends TestCase
 {
-    public function baseExtractionProvider()
+    public static function baseExtractionProvider()
     {
         return [
             ['http://localhost/base/index.php', '/base'],
@@ -48,7 +48,7 @@ class BaseUrlMiddlewareTest extends TestCase
     /**
      * @dataProvider baseExtractionProvider 
      */
-    public function testBaseExtraction(string $inputUrl, string $expected)
+    public function testBaseExtraction(string $inputUrl, string $expected): void
     {
         $buf     = new BaseUrlFinder();
         $request = SimpleFlashRequestFactory::createWithoutServiceManager($inputUrl);

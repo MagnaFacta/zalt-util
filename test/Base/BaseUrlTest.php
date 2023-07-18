@@ -20,7 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 class BaseUrlTest extends TestCase
 {
-    public function knownProvider(): array
+    public static function knownProvider(): array
     {
         return [
             ['base', 'base'],
@@ -36,7 +36,7 @@ class BaseUrlTest extends TestCase
         ];    
     }
     
-    public function testEmpty()
+    public function testEmpty(): void
     {
         $base = new BaseUrl();
         
@@ -47,7 +47,7 @@ class BaseUrlTest extends TestCase
     /**
      * @dataProvider knownProvider
      */
-    public function testKnown($input, $expected)
+    public function testKnown($input, $expected): void
     {
         $base = new BaseUrl();
         $base->setBaseUrl($input);

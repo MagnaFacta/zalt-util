@@ -36,7 +36,7 @@ class SimpleRouter implements \Mezzio\Router\RouterInterface
      */
     public function match(Request $request) : RouteResult
     {
-        return RouteResult::fromRouteFailure();
+        return RouteResult::fromRouteFailure(null);
     }
 
     /**

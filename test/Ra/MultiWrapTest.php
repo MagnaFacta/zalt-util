@@ -22,7 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class MultiWrapTest extends TestCase
 {
-    public function contentProvider()
+    public static function contentProvider()
     {
         $array1 = ['a' => new \stdClass(), 'b' => new \stdClass(), 'c' => new \stdClass()];
         $array2 = ['a' => new \stdClass(), 'b' => new \stdClass(), 'c' => new \stdClass()];
@@ -36,7 +36,7 @@ class MultiWrapTest extends TestCase
     /**
      * @dataProvider contentProvider
      */
-    public function testWithTraverable(array $array, MultiWrapper $multi)
+    public function testWithTraverable(array $array, MultiWrapper $multi): void
     {
         $this->assertFalse(isset($multi->a));
         

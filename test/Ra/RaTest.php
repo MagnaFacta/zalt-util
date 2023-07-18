@@ -29,7 +29,7 @@ class RaTest extends TestCase
         return get_object_vars($object);
     }
 
-    public function isMultiDimensionalDataProvider()
+    public static function isMultiDimensionalDataProvider()
     {
         return [
             [['a', ['b']], true],
@@ -41,12 +41,12 @@ class RaTest extends TestCase
     /**
      * @dataProvider isMultiDimensionalDataProvider
      */
-    public function testIsMultiDimensional($array, $test)
+    public function testIsMultiDimensional($array, $test): void
     {
         $this->assertEquals($test, Ra::isMultiDimensional($array));
     }
     
-    public function testToArray()
+    public function testToArray(): void
     {
         $this->assertIsArray(Ra::to(['a', 'b', 'c']));
 
@@ -58,7 +58,7 @@ class RaTest extends TestCase
         Ra::to('a');
     }
     
-    public function testToConverter()
+    public function testToConverter(): void
     {
         $obj  = new stdClass();
         $obj->a = 'b';
@@ -75,7 +75,7 @@ class RaTest extends TestCase
         $this->assertEquals(['a' => 'b', 'c' => 'd'], $res);
     }
     
-    public function testToObjects()
+    public function testToObjects(): void
     {
         $array = ['a', 'b'];
         

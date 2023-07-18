@@ -25,7 +25,7 @@ class RequestInfoTest extends TestCase
     /**
      * @dataProvider urlProvider 
      */
-    public function testUrls($url, $base, $param = null, $value = null)
+    public function testUrls($url, $base, $param = null, $value = null): void
     {
         $request = SimpleFlashRequestFactory::createWithoutServiceManager($url);
         
@@ -37,7 +37,7 @@ class RequestInfoTest extends TestCase
         }
     }
     
-    public function urlProvider()
+    public static function urlProvider()
     {
         return [
             ['https://zelt.test.nl/', '/'],
