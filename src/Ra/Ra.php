@@ -638,7 +638,7 @@ class Ra
      *
      * @param array $arg The input array
      * @return array array(integer_keys, string_keys)
-     * /
+     */
     public static function keySplit(array $arg)
     {
         $nums    = array();
