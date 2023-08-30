@@ -10,7 +10,6 @@
 namespace Zalt\Base;
 
 use InvalidArgumentException;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Add auto translate functions to a class
