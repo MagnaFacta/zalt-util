@@ -73,7 +73,8 @@ class Ra
      * @ param array $input Yhe input array / iterator / etc...
      * @ param string $keyField The string to use as key for the key field
      * @ param string $valueField The string to use as key for the value field when the value is not an array
-     * /
+     */
+    /*
     public static function addKey(array $input, $keyField = 'key', $valueField = 'value')
     {
         $output = array();
@@ -90,6 +91,7 @@ class Ra
 
         return $output;
     }
+    */
 
     /**
      * The args() function makes position independent argument passing possible.
@@ -366,7 +368,8 @@ class Ra
      * @param string $left Brace string, e.g. '%', '{', '[', '"'
      * @param string $right Optional, when emptu same as left.
      * @return array Array with the same values but braces around the keys
-     * /
+     */
+    /*
     public static function braceKeys(array $input, $left, $right = null)
     {
         if (null === $right) {
@@ -380,6 +383,7 @@ class Ra
 
         return $results;
     }
+    */
 
     /**
      * Extracts a column from a nested array of values, maintaining index association.
@@ -391,7 +395,8 @@ class Ra
      * @param array $input A nested array from which we extract a column
      * @param int $mode STRICT means missing values are returned as 'null'
      * @return array An array containing the requested column
-     * /
+     */
+    /*
     public static function column($index, array $input, $mode = self::RELAXED)
     {
         $all = (self::STRICT === $mode);
@@ -405,6 +410,7 @@ class Ra
         }
         return $results;
     }
+    */
 
     /**
      * Search through an array and return those keys that are in the list
@@ -412,7 +418,8 @@ class Ra
      * @param array $data
      * @param array|scalar $keyArrayOrKey1
      * @param scalar $keys2
-     * /
+     */
+    /*
     public static function filterKeys(array $data, $keyArrayOrKey1, $keys2 = null)
     {
         if (is_array($keyArrayOrKey1)) {
@@ -424,6 +431,7 @@ class Ra
 
         return array_intersect_key($data, array_fill_keys($keys, null));
     }
+    */
 
     /**
      * Search through nested array for the first row
@@ -432,7 +440,8 @@ class Ra
      * @param array $data A nested array
      * @param array $keys index => value
      * @return mixed Key from data if found or null otherwise
-     * /
+     */
+    /*
     public static function findKeys(array $data, array $keys)
     {
         if (count($keys) == 1) {
@@ -460,6 +469,7 @@ class Ra
 
         return null;
     }
+    */
 
     /**
      * Flattens an array recursively.
@@ -491,7 +501,8 @@ class Ra
      * @param array $targetArray
      * @param scalar $findKey
      * @return false|int The integer position of the key or false if not found
-     * /
+     */
+    /*
     public static function getKeyPos(array $targetArray, $findKey)
     {
         $pos = 0;
@@ -504,6 +515,7 @@ class Ra
         
         return false;
     }
+    */
     
     /**
      * Get or create the current to ArrayConverter
@@ -527,7 +539,8 @@ class Ra
      * @param mixed $value The value to insert
      * @param scalar $keyValue The new key for the value
      * @return array
-     * /    
+     */
+    /*
     public static function insertAfter(array $targetArray, $afterKey, $value, $keyValue = null)
     {
         if (null === $keyValue) {
@@ -545,6 +558,7 @@ class Ra
         
         return $targetArray;
     }
+    */
 
     /**
      * Insert a value after a certain key occurs (or at the start if it does not not occur)
@@ -554,7 +568,8 @@ class Ra
      * @param mixed $value The value to insert
      * @param scalar $keyValue The new key for the value
      * @return array
-     * /
+     */
+    /*
     public static function insertBefore(array $targetArray, $beforeKey, $value, $keyValue = null)
     {
         if (null === $keyValue) {
@@ -572,6 +587,7 @@ class Ra
 
         return $targetArray;
     }
+    */
     
     /**
      * Returns true if the $object either is an array or can be converted to an array.
@@ -609,7 +625,8 @@ class Ra
      *
      * @param mixed $value
      * @return boolean
-     * /
+     */
+    /*
     public static function isScalar($value)
     {
         if (null === $value) {
@@ -629,6 +646,7 @@ class Ra
 
         return is_scalar($value);
     }
+    */
 
     /**
      * This functions splits an array into two arrays, one containing
@@ -663,7 +681,8 @@ class Ra
      * @param array $mapArray array containing current name => new name
      * @param boolean $recursive When true sub arrays are also mapped
      * @return array
-     * /
+     */
+    /*
     public static function map(array $sourceArray, array $mapArray, $recursive = false)
     {
         $result = array();
@@ -682,6 +701,7 @@ class Ra
 
         return $result;
     }
+    */
 
     /**
      * Returns a sequential array of all non-scalar values in $value,
@@ -689,7 +709,8 @@ class Ra
      *
      * @param mixed $value
      * @return array
-     * /
+     */
+    /*
     public static function nonScalars($value)
     {
         $output = array();
@@ -698,6 +719,7 @@ class Ra
 
         return $output;
     }
+    */
 
     /**
      * Add's all the non-scaler values in $value to output/
@@ -705,7 +727,8 @@ class Ra
      * @param mixed $value
      * @param array $output
      * @return void $output is the real result
-     * /
+     */
+    /*
     private static function nonScalarFinder($value, array &$output)
     {
         if (null === $value) {
@@ -720,6 +743,7 @@ class Ra
             $output[] = $value;
         }
     }
+    */
 
     /**
      * A function that transforms an array in the form key1, value1, key2, value2 into array(key1 => value1, key2 => value2).
