@@ -225,7 +225,7 @@ class Ra
      * @param mixed $skipOrName If numeric the number of arguments in $args to leave alone, otherwise the names of numbered
      *                          elements. Class names can also be specified.
      * @param array $defaults   An array of argument name => default_value pairs.
-     * @param boolean $mode     The $skipOrName types are only used as hints or must be strictly adhered to.
+     * @param int   $mode     The $skipOrName types are only used as hints or must be strictly adhered to.
      * @return array Flattened array containing the arguments.
      */
     public static function args(array $args, $skipOrName = 0, $defaults = array(), $mode = self::RELAXED)
@@ -520,7 +520,6 @@ class Ra
     /**
      * Get or create the current to ArrayConverter
      *
-     * @param mixed $converter ClassList or something that can be used as input to create one
      */
     public static function getToArrayConverter(): ClassList
     {
