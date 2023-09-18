@@ -50,6 +50,7 @@ class MultiWrapTest extends TestCase
         /** @phpstan-ignore-next-line */
         $multi->a = 'b';
         $result = $multi->a;
+        /** @phpstan-ignore-next-line */
         $this->assertCount(3, $result);
         foreach ($array as $key => $object) {
             $this->assertEquals('b', $object->a);
