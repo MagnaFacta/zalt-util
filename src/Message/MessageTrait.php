@@ -25,7 +25,7 @@ trait MessageTrait
      * @var MessengerInterface
      *
      */
-    protected $messenger;
+    protected MessengerInterface $messenger;
 
     /**
      * Adds one or more messages to the session based message store.

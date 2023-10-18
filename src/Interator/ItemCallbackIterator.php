@@ -36,9 +36,14 @@ class ItemCallbackIterator implements \OuterIterator, \Countable
      */
     public function __construct(\Traversable $iterator, callable $callback)
     {
-        $this->_iterator = $iterator;
-        while ($this->_iterator instanceof \IteratorAggregate) {
-            $this->_iterator = $this->_iterator->getIterator();
+        while ($iterator instanceof \IteratorAggregate) {
+            $iterator = $iterator->getIterator();
+        }
+        if ($iterator instanceof \Iterator) {
+            $this->_iterator = $iterator;
+        } else {
+            $iterator = new \ArrayObject($iterator);
+            $this->_iterator = $iterator->getIterator();
         }
 
         $this->_callback = $callback;

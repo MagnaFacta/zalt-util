@@ -39,13 +39,15 @@ class MultiWrapTest extends TestCase
     public function testWithTraverable(array $array, MultiWrapper $multi): void
     {
         $this->assertFalse(isset($multi->a));
-        
+
+        // @phpstan-ignore property.notFound
         $result = $multi->a;
         $this->assertEmpty($result);
         foreach ($array as $key => $object) {
             $this->assertFalse(isset($object->a));
         }
-        
+
+        // @phpstan-ignore property.notFound
         $multi->a = 'b';
         $result = $multi->a;
         $this->assertCount(3, $result);
