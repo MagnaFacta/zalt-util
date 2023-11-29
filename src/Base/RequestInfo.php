@@ -22,14 +22,14 @@ class RequestInfo
     protected $params = [];
     
     public function __construct(
-        protected ?string $currentController,
-        protected ?string $currentAction,
-        protected ?string $routeName,
-        protected ?string $basePath = '',
-        protected bool $isPost = false,
-        protected array $requestMatchedParams = [],
-        protected array $requestPost = [],
-        protected array $requestQueryParams = []
+        protected readonly ?string $currentController,
+        protected readonly ?string $currentAction,
+        protected readonly ?string $routeName,
+        protected readonly ?string $basePath = '',
+        protected readonly bool $isPost = false,
+        protected readonly array $requestMatchedParams = [],
+        protected readonly array $requestPost = [],
+        protected readonly array $requestQueryParams = []
     ) {
         $this->params = $this->requestMatchedParams + $this->requestPost + $this->requestQueryParams;
     }
@@ -57,6 +57,23 @@ class RequestInfo
     public function getCurrentController(): ?string
     {
         return $this->currentController;
+    }
+
+    /**
+     * @return string|null Returns the current url minus all the string parameters
+     */
+    public function getCurrentPage(): ?string
+    {
+        $page = $this->getBasePath();
+        if ($page) {
+            foreach ($this->getRequestMatchedParams() as $value) {
+                if (str_contains($page, '/' . $value)) {
+                    $page = substr($page, 0, strpos($page, '/' . $value));
+                }
+            }
+        }
+
+        return $page;
     }
 
     public function getParam(string $name, mixed $default = null): mixed
