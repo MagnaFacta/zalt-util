@@ -25,7 +25,8 @@ class RequestInfo
         protected readonly ?string $currentController,
         protected readonly ?string $currentAction,
         protected readonly ?string $routeName,
-        protected readonly ?string $basePath = '',
+        protected readonly string $baseDir = '',
+        protected readonly string $path = '',
         protected readonly bool $isPost = false,
         protected readonly array $requestMatchedParams = [],
         protected readonly array $requestPost = [],
@@ -33,12 +34,20 @@ class RequestInfo
     ) {
         $this->params = $this->requestMatchedParams + $this->requestPost + $this->requestQueryParams;
     }
-    
-    public function getBasePath()
+
+    /**
+     * @return string The subdirectory of the webserver the application is in or an empty string
+     */
+    public function getBaseDir(): string
     {
-        return $this->basePath;
+        return $this->baseDir;
     }
-    
+
+    public function getBasePath(): string
+    {
+        return $this->baseDir . $this->path;
+    }
+
     /**
      * Get the current action name
      *
@@ -87,6 +96,14 @@ class RequestInfo
     public function getParams(): array
     {
         return $this->params;
+    }
+
+    /**
+     * @return string The route specific part of the url
+     */
+    public function getPath(): string
+    {
+        return $this->path;
     }
 
     /**

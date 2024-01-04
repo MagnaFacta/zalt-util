@@ -4,8 +4,12 @@ Zalt General Utility functions shared over multiple zalt libraries
 
 ## Base
 
-Contains traits for standard messaging and translation as well as a BaseUrl object that is used to add the "sub folder" 
-part of an installation to urls.
+Contains traits for standard messaging and translation as well as a BaseDir static function object that is used to add
+the "sub folder" string to add if the application is in a subdirectory of the webserver or an empty string.
+
+This group also contains the RequestInfo object, which is a lightweight alternative for using full PSR7 Request object
+and contains only scalar variables (so no objects). To create it from a request object, use/create a RequestInfoFactory
+static creation function for your type of Request object.
 
 ## Lists
 

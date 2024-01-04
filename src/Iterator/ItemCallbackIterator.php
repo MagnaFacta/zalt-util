@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 /**
  * @package    Zalt
- * @subpackage Interator
+ * @subpackage Iterator
  * @author     Matijs de Jong <mjong@magnafacta.nl>
  */
 
-namespace Zalt\Interator;
+namespace Zalt\Iterator;
 
 /**
  * @package    Zalt
- * @subpackage Interator
+ * @subpackage Iterator
  * @since      Class available since version 1.0
  */
 class ItemCallbackIterator implements \OuterIterator, \Countable
