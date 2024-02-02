@@ -59,6 +59,7 @@ class BaseDir
     public static function getBaseDir(): string
     {
         if (null === self::$baseDir) {
+            // file_put_contents('data/logs/echo.txt', __CLASS__ . '->' . __FUNCTION__ . '(' . __LINE__ . '): ' .  print_r($_SERVER, true) . "\n", FILE_APPEND);
             self::setBaseDir(self::findBaseDir($_SERVER));
         }
 
