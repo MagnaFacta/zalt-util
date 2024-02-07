@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 /**
  * @package    Zalt
- * @subpackage Interator
+ * @subpackage Iterator
  * @author     Matijs de Jong <mjong@magnafacta.nl>
  */
 
-namespace Zalt\Interator;
+namespace Zalt\Iterator;
 
 /**
  * @package    Zalt
- * @subpackage Interator
+ * @subpackage Iterator
  * @since      Class available since version 1.0
  */
 class ItemCallbackIterator implements \OuterIterator, \Countable
@@ -36,9 +36,14 @@ class ItemCallbackIterator implements \OuterIterator, \Countable
      */
     public function __construct(\Traversable $iterator, callable $callback)
     {
-        $this->_iterator = $iterator;
-        while ($this->_iterator instanceof \IteratorAggregate) {
-            $this->_iterator = $this->_iterator->getIterator();
+        while ($iterator instanceof \IteratorAggregate) {
+            $iterator = $iterator->getIterator();
+        }
+        if ($iterator instanceof \Iterator) {
+            $this->_iterator = $iterator;
+        } else {
+            $iterator = new \ArrayObject($iterator);
+            $this->_iterator = $iterator->getIterator();
         }
 
         $this->_callback = $callback;

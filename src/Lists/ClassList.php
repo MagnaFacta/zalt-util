@@ -57,7 +57,7 @@ class ClassList extends LookupList
      *
      * This is a separate function to allow overloading by subclasses.
      *
-     * @param scalar $key
+     * @param mixed $key
      * @param mixed $default
      * @return mixed
      */

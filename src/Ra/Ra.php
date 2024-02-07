@@ -223,7 +223,7 @@ class Ra
      * @param mixed $skipOrName If numeric the number of arguments in $args to leave alone, otherwise the names of numbered
      *                          elements. Class names can also be specified.
      * @param array $defaults   An array of argument name => default_value pairs.
-     * @param boolean $mode     The $skipOrName types are only used as hints or must be strictly adhered to.
+     * @param int $mode     The $skipOrName types are only used as hints or must be strictly adhered to.
      * @return array Flattened array containing the arguments.
      */
     public static function args(array $args, $skipOrName = 0, $defaults = array(), $mode = self::RELAXED)
@@ -360,108 +360,6 @@ class Ra
     }
 
     /**
-     * Put braces around the array keys.
-     *
-     * @param array $input
-     * @param string $left Brace string, e.g. '%', '{', '[', '"'
-     * @param string $right Optional, when emptu same as left.
-     * @return array Array with the same values but braces around the keys
-     * /
-    public static function braceKeys(array $input, $left, $right = null)
-    {
-        if (null === $right) {
-            $right = $left;
-        }
-        $results = array();
-
-        foreach ($input as $key => $value) {
-            $results[$left . $key . $right] = $value;
-        }
-
-        return $results;
-    }
-
-    /**
-     * Extracts a column from a nested array of values, maintaining index association.
-     *
-     * The default RELAXED mode will return only values where these exist and are not null.
-     * STRICT mode will return all values plus null for all keys in $input.
-     *
-     * @param string $index Index of the column to extract
-     * @param array $input A nested array from which we extract a column
-     * @param int $mode STRICT means missing values are returned as 'null'
-     * @return array An array containing the requested column
-     * /
-    public static function column($index, array $input, $mode = self::RELAXED)
-    {
-        $all = (self::STRICT === $mode);
-        $results = array();
-        foreach ($input as $key => $row) {
-            if (isset($row[$index])) {
-                $results[$key] = $row[$index];
-            } elseif ($all) {
-                $results[$key] = null;
-            }
-        }
-        return $results;
-    }
-
-    /**
-     * Search through an array and return those keys that are in the list
-     *
-     * @param array $data
-     * @param array|scalar $keyArrayOrKey1
-     * @param scalar $keys2
-     * /
-    public static function filterKeys(array $data, $keyArrayOrKey1, $keys2 = null)
-    {
-        if (is_array($keyArrayOrKey1)) {
-            $keys = $keyArrayOrKey1;
-        } else {
-            $keys = func_get_args();
-            array_shift($keys);
-        }
-
-        return array_intersect_key($data, array_fill_keys($keys, null));
-    }
-
-    /**
-     * Search through nested array for the first row
-     * that contains the whole $keys array.
-     *
-     * @param array $data A nested array
-     * @param array $keys index => value
-     * @return mixed Key from data if found or null otherwise
-     * /
-    public static function findKeys(array $data, array $keys)
-    {
-        if (count($keys) == 1) {
-            $value = reset($keys);
-            $key   = key($keys);
-            foreach ($data as $index => $row) {
-                if (isset($row[$key]) && ($row[$key] == $value)) {
-                    return $index;
-                }
-            }
-        } else {
-            foreach ($data as $index => $row) {
-                $found = true;
-                foreach ($keys as $key => $value) {
-                    if ((!isset($row[$key])) || ($row[$key] !== $value)) {
-                        $found = false;
-                        break;
-                    }
-                }
-                if ($found) {
-                    return $index;
-                }
-            }
-        }
-
-        return null;
-    }
-
-    /**
      * Flattens an array recursively.
      *
      * All keys are removed and items are added depth-first to the output array.
@@ -488,27 +386,9 @@ class Ra
     }
 
     /**
-     * @param array $targetArray
-     * @param scalar $findKey
-     * @return false|int The integer position of the key or false if not found
-     * /
-    public static function getKeyPos(array $targetArray, $findKey)
-    {
-        $pos = 0;
-        foreach ($targetArray as $key => $val) {
-            if ($key === $findKey) {
-                return $pos;
-            }
-            $pos++;
-        }
-        
-        return false;
-    }
-    
-    /**
      * Get or create the current to ArrayConverter
      *
-     * @param mixed $converter ClassList or something that can be used as input to create one
+     * @return ClassList or something that can be used as input to create one
      */
     public static function getToArrayConverter(): ClassList
     {
@@ -519,60 +399,6 @@ class Ra
         return self::$_toArrayConverter;
     }
 
-    /**
-     * Insert a value after a certain key occurs (or at the end if it does not occur)
-     * 
-     * @param array $targetArray The array to insert in
-     * @param scalar $afterKey The key to insert after
-     * @param mixed $value The value to insert
-     * @param scalar $keyValue The new key for the value
-     * @return array
-     * /    
-    public static function insertAfter(array $targetArray, $afterKey, $value, $keyValue = null)
-    {
-        if (null === $keyValue) {
-            $newArray[count($targetArray)] = $value;
-        } else {
-            $newArray[$keyValue] = $value;
-        }
-        $pos = self::getKeyPos($targetArray, $afterKey);
-
-        if (false === $pos) {
-            return $targetArray + $newArray;
-        }
-
-        array_splice($targetArray, $pos + 1, 0, $newArray);
-        
-        return $targetArray;
-    }
-
-    /**
-     * Insert a value after a certain key occurs (or at the start if it does not not occur)
-     *
-     * @param array $targetArray The array to insert in
-     * @param scalar $beforeKey The key to insert before
-     * @param mixed $value The value to insert
-     * @param scalar $keyValue The new key for the value
-     * @return array
-     * /
-    public static function insertBefore(array $targetArray, $beforeKey, $value, $keyValue = null)
-    {
-        if (null === $keyValue) {
-            $newArray[count($targetArray)] = $value;
-        } else {
-            $newArray[$keyValue] = $value;
-        }
-        $pos = self::getKeyPos($targetArray, $beforeKey);
-
-        if (false === $pos) {
-            return $newArray + $targetArray;
-        }
-        
-        array_splice($targetArray, $pos, 0, $newArray);
-
-        return $targetArray;
-    }
-    
     /**
      * Returns true if the $object either is an array or can be converted to an array.
      *
@@ -604,33 +430,6 @@ class Ra
     }
     
     /**
-     * Test whether the value is scalar or an array containing
-     * scalars or scalar arrays.
-     *
-     * @param mixed $value
-     * @return boolean
-     * /
-    public static function isScalar($value)
-    {
-        if (null === $value) {
-            return true;
-
-        }
-
-        if (is_array($value)) {
-            foreach($value as $sub_value) {
-                if (! self::isScalar($sub_value)) {
-                    return false;
-                }
-            }
-            return true;
-
-        }
-
-        return is_scalar($value);
-    }
-
-    /**
      * This functions splits an array into two arrays, one containing
      * the integer keys and one containing the string keys and returns
      * an array containing first the integer key array and then the
@@ -653,72 +452,6 @@ class Ra
         }
 
         return array($nums, $strings);
-    }
-
-    /**
-     * Maps the key names in the array from the current name to the new
-     * name in the $mapArray
-     *
-     * @param array $sourceArray The array the replace the key names in
-     * @param array $mapArray array containing current name => new name
-     * @param boolean $recursive When true sub arrays are also mapped
-     * @return array
-     * /
-    public static function map(array $sourceArray, array $mapArray, $recursive = false)
-    {
-        $result = array();
-        foreach ($sourceArray as $name => $value) {
-
-            if ($recursive && is_array($value)) {
-                $value = self::map($value, $mapArray, true);
-            }
-
-            if (isset($mapArray[$name])) {
-                $result[$mapArray[$name]] = $value;
-            } else {
-                $result[$name] = $value;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * Returns a sequential array of all non-scalar values in $value,
-     * recursing through any nested arrays.
-     *
-     * @param mixed $value
-     * @return array
-     * /
-    public static function nonScalars($value)
-    {
-        $output = array();
-
-        self::nonScalarFinder($value, $output);
-
-        return $output;
-    }
-
-    /**
-     * Add's all the non-scaler values in $value to output/
-     *
-     * @param mixed $value
-     * @param array $output
-     * @return void $output is the real result
-     * /
-    private static function nonScalarFinder($value, array &$output)
-    {
-        if (null === $value) {
-            return;
-        }
-
-        if (is_array($value)) {
-            foreach($value as $sub_value) {
-                self::nonScalarFinder($sub_value, $output);
-            }
-        } elseif (! is_scalar($value)) {
-            $output[] = $value;
-        }
     }
 
     /**

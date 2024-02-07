@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 /**
  *
- * 
  * @package    Zalt
  * @subpackage Mock
  * @author     Matijs de Jong <mjong@magnafacta.nl>
@@ -12,30 +11,16 @@ declare(strict_types=1);
 
 namespace Zalt\Mock;
 
-use Symfony\Contracts\Translation\TranslatorInterface;
-
 /**
- * Mock object implementing the Symfony\Contracts\Translation\TranslatorInterface 
+ * Mock object implementing the Zalt\Base\TranslatorInterface
+ *
+ * This class exists a) because we've used the name in the past and b) because is nicer to use.
+ *
+ * As to the reason for the name: https://en.wikipedia.org/wiki/Potemkin_village
  * 
  * @package    Zalt
  * @subpackage Mock
  * @since      Class available since version 1.0
  */
-class PotemkinTranslator implements TranslatorInterface
-{
-    /**
-     * @inheritDoc
-     */
-    public function trans(string $id, array $parameters = [], string $domain = null, string $locale = null) : string
-    {
-        return $id;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getLocale() : string
-    {
-        return 'en';
-    }
-}
+class PotemkinTranslator extends MockTranslator
+{ }

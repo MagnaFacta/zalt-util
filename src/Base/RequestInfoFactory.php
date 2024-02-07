@@ -30,14 +30,15 @@ class RequestInfoFactory
         $routeName          = null;
         $routeMatchedParams = [];
 
-        $path = $request->getUri()->getPath();
-        if (pathInfo($path, PATHINFO_EXTENSION)) {
-            $baseUrl = dirname($path);
-        } else {
-            $baseUrl = $path;
+        $baseDir = BaseDir::getBaseDir();
+        $path    = $request->getUri()->getPath();
+        if (str_contains(basename($path), '.')) {
+            $path = dirname($path);
         }
-        // return ($this->getHeader('X_REQUESTED_WITH') == 'XMLHttpRequest')
-        
+        if ($baseDir && str_starts_with($path, $baseDir)) {
+            $path = substr($path, strlen($baseDir));
+        }
+
         $routeResult = $request->getAttribute(RouteResult::class);
         if ($routeResult instanceof RouteResult) {
             $routeMatchedParams = $routeResult->getMatchedParams();
@@ -60,7 +61,8 @@ class RequestInfoFactory
             $controllerName, 
             $actionName,
             $routeName,
-            rtrim($baseUrl, '/\\') ?: '/',
+            $baseDir,
+            rtrim($path, '/\\'),
             'POST' == $request->getMethod(),
             $routeMatchedParams,
             $request->getParsedBody() ?: [],

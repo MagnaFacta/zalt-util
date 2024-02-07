@@ -38,5 +38,5 @@ interface MessengerInterface
      *
      * @return array
      */
-    public function getMessages(): array;
+    public function getMessages(?MessageStatus $status = null, bool $keep = false): array;
 }

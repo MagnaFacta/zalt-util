@@ -15,7 +15,7 @@ namespace Zalt\Mock;
  * @subpackage Mock
  * @since      Class available since version 1.0
  */
-class MockTranslator implements \Symfony\Contracts\Translation\TranslatorInterface
+class MockTranslator implements \Zalt\Base\TranslatorInterface
 {
     /**
      * @inheritDoc
@@ -31,5 +31,15 @@ class MockTranslator implements \Symfony\Contracts\Translation\TranslatorInterfa
     public function getLocale(): string
     {
         return 'en';
+    }
+
+    public function _(?string $id, array $parameters = [], string $domain = null, string $locale = null): string
+    {
+        return $id ?? '';
+    }
+
+    public function plural(string $singular, string $plural, int $number, ?string $locale = null): string
+    {
+        return $singular;
     }
 }

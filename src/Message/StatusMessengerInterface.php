@@ -21,7 +21,6 @@ interface StatusMessengerInterface extends MessengerInterface
      *
      * @param string $message
      * @param MessageStatus $status
-     * @param bool $now
      * @return void
      */
     public function addMessage(string $message, MessageStatus $status=MessageStatus::Info): void;
@@ -31,7 +30,6 @@ interface StatusMessengerInterface extends MessengerInterface
      *
      * @param array $messages
      * @param MessageStatus $status
-     * @param bool $now
      * @return void
      */
     public function addMessages(array $messages, MessageStatus $status=MessageStatus::Info): void;
@@ -47,7 +45,6 @@ interface StatusMessengerInterface extends MessengerInterface
     /**
      * Clear the current messages
      *
-     * @param bool $now Should the messages also be cleared for the current request
      * @return void
      */
     public function clearMessages(): void;
