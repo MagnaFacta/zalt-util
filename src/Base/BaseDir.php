@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace Zalt\Base;
 
+use Psr\Http\Message\ServerRequestInterface;
+
 /**
  * @package    Zalt
  * @subpackage Base
@@ -18,6 +20,18 @@ namespace Zalt\Base;
 class BaseDir
 {
     protected static ?string $baseDir = null;
+
+    public static function addBaseDir(string $hostUrl, string $baseDir = null)
+    {
+        if (! $baseDir) {
+            $baseDir = self::getBaseDir();
+        }
+
+        if (str_ends_with(strtolower($hostUrl), strtolower($baseDir))) {
+            return $hostUrl;
+        }
+        return trim($hostUrl, '/') . $baseDir;
+    }
 
     /**
      * This function checks if the found filename has an extension, in that case the filename itself
@@ -82,5 +96,28 @@ class BaseDir
             $baseDir = '/' . $baseDir;
         }
         self::$baseDir = rtrim($baseDir, '/');
+    }
+    
+    public static function withBaseDir(ServerRequestInterface $request): ServerRequestInterface
+    {
+        if (! self::$baseDir) {
+            self::setBaseDir(self::findBaseDir($request->getServerParams()));
+        }
+
+        $baseDir = rtrim(self::getBaseDir(), '/');
+        if (! $baseDir) {
+            return $request;
+        }
+        
+        $uri  = $request->getUri();
+        $host = $uri->getHost();
+        if (str_ends_with($host, $baseDir)) {
+            return $request;
+        }
+        $uriPath = $uri->withHost($uri->getHost() . $baseDir);
+        if (str_starts_with($uri->getPath(), $baseDir)) {
+            $uriPath = $uriPath->withPath(substr($uri->getPath(), strlen($baseDir)));
+        }
+        return $request->withUri($uriPath, true);
     }
 }
