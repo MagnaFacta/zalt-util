@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Zalt\Base;
 
+use IPLib\Factory;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -19,20 +20,25 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 class RequestUtil
 {
-    public static function getClientIp(ServerRequestInterface $request = null): ?string
+    private static array $trustedProxies = [];
+
+    private static string $trustedProxyIpHeader = 'HTTP_X_FORWARDED_FOR';
+
+    public static function getClientIp(ServerRequestInterface $request): ?string
     {
-        if ($request) {
-            $params = $request->getServerParams();
-        } else {
-            $params = $_SERVER;
+        $serverParams = $request->getServerParams();
+        $ip = $serverParams['REMOTE_ADDR'] ?? null;
+
+        if (!static::isFromTrustedProxy($ip)) {
+            return $ip;
         }
 
-        foreach (['HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR'] as $field) {
-            if (isset($params[$field])) {
-                return $params[$field];
-            }
+        if (isset($serverParams[static::$trustedProxyIpHeader])) {
+            $proxiedIps = explode(',', $serverParams[static::$trustedProxyIpHeader]);
+            return trim($proxiedIps[0]);
         }
-        return null;
+
+        return $ip;
     }
 
     public static function getProtocol(ServerRequestInterface $request): string
@@ -42,6 +48,22 @@ class RequestUtil
         }
 
         return 'http';
+    }
+
+    public static function isFromTrustedProxy(string $ip): bool
+    {
+        if (!self::$trustedProxies) {
+            return false;
+        }
+        $address = Factory::parseAddressString($ip);
+        foreach(static::$trustedProxies as $trustedProxy) {
+            $range = Factory::parseRangeString($trustedProxy);
+            if ($address->matches($range)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public static function isSecure(ServerRequestInterface $request): bool
@@ -57,5 +79,18 @@ class RequestUtil
             return $serverParams['HTTPS'] == '1';
         }
         return false;
+    }
+
+    /**
+     * @param array $trustedProxies
+     */
+    public static function setTrustedProxies(array $trustedProxies): void
+    {
+        self::$trustedProxies = $trustedProxies;
+    }
+
+    public static function setTrustedProxyIpHeader(string $trustedProxyIpHeader): void
+    {
+        self::$trustedProxyIpHeader = $trustedProxyIpHeader;
     }
 }
