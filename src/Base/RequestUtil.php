@@ -29,12 +29,12 @@ class RequestUtil
         $serverParams = $request->getServerParams();
         $ip = $serverParams['REMOTE_ADDR'] ?? null;
 
-        if (!static::isFromTrustedProxy($ip)) {
+        if (!self::isFromTrustedProxy($ip)) {
             return $ip;
         }
 
-        if (isset($serverParams[static::$trustedProxyIpHeader])) {
-            $proxiedIps = explode(',', $serverParams[static::$trustedProxyIpHeader]);
+        if (isset($serverParams[self::$trustedProxyIpHeader])) {
+            $proxiedIps = explode(',', $serverParams[self::$trustedProxyIpHeader]);
             return trim($proxiedIps[0]);
         }
 
