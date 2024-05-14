@@ -56,7 +56,7 @@ class RequestUtil
             return false;
         }
         $address = Factory::parseAddressString($ip);
-        foreach(static::$trustedProxies as $trustedProxy) {
+        foreach(self::$trustedProxies as $trustedProxy) {
             $range = Factory::parseRangeString($trustedProxy);
             if ($address->matches($range)) {
                 return true;
