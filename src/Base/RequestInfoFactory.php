@@ -33,9 +33,9 @@ class RequestInfoFactory
         $baseDir = BaseDir::getBaseDir();
         $path    = $request->getUri()->getPath();
         if (str_contains(basename($path), '.')) {
-            $path = dirname($path);
+            $path = dirname($path) . '/';
         }
-        if ($baseDir && str_starts_with($path, $baseDir)) {
+        if ($baseDir && str_starts_with($path, $baseDir . '/')) {
             $path = substr($path, strlen($baseDir));
         }
 

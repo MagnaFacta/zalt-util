@@ -58,6 +58,9 @@ class BaseDir
                 $scriptFile = dirname($scriptFile);
             }
             if ($scriptFile) {
+                if ('\\' === DIRECTORY_SEPARATOR && str_contains($scriptFile, DIRECTORY_SEPARATOR)) {
+                    return str_replace(DIRECTORY_SEPARATOR, '/', $scriptFile);
+                }
                 return $scriptFile;
             }
         }

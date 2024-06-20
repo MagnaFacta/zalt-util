@@ -47,7 +47,7 @@ class RequestInfoTest extends TestCase
         return [
             ['https://zelt.test.nl/', '/', ''],
             ['https://zelt.test.nl/index.php?x=y', '/', '', 'x', 'y'],
-            ['https://localhost/base', '/base', ''],
+            ['https://localhost/base/', '/base', ''],
             ['https://localhost/base', '', '/base'],
             ['https://localhost/base/index.php', '/base', ''],
             ['https://localhost/base/index.php', '', '/base'],
