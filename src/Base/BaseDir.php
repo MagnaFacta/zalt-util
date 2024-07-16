@@ -83,6 +83,27 @@ class BaseDir
         return self::$baseDir;
     }
 
+    public static function removeBaseDir(string $input): string
+    {
+        $baseDir = self::getBaseDir();
+
+        if (! $baseDir) {
+            return $input;
+        }
+
+        if (str_starts_with($input, $baseDir)) {
+            return substr($input, strlen($baseDir));
+        }
+        if (str_ends_with($input, $baseDir)) {
+            return substr($input, 0, -strlen($baseDir));
+        }
+        if (str_ends_with($input, $baseDir . '/')) {
+            return substr($input, 0, -(1 + strlen($baseDir)));
+        }
+
+        return $input;
+    }
+
     /**
      * Sets up and cleans the input for using getBaseDir()
      * @param string $baseDir
