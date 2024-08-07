@@ -4,4 +4,3 @@ composer.phar
 /test/.phpunit.result.cache
 .phpunit.cache
 test/html-coverage
-/composer.lock
