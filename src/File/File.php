@@ -238,6 +238,20 @@ class File
     public static function isOnWindows(): bool
     {
         return (DIRECTORY_SEPARATOR == '\\');
+    } // */
+
+    /**
+     * Remove the UTF Byte Order Mark - if it is there
+     *
+     * @param string $str
+     * @return string
+     */
+    public static function removeBOM(string $str): string
+    {
+        if (substr($str, 0, 3) == pack("CCC", 0xef, 0xbb, 0xbf)) {
+            return substr($str, 3);
+        }
+        return $str;
     }
 
     /**
