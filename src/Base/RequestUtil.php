@@ -41,6 +41,28 @@ class RequestUtil
         return $ip;
     }
 
+    public static function getCurrentUrl(ServerRequestInterface $request): ?string
+    {
+        $hosts = [];
+        $serverParams = $request->getServerParams();
+
+        if (isset($serverParams['HTTP_HOST'])) {
+            $hosts[] = $serverParams['HTTP_HOST'];
+        }
+        if (isset($serverParams['SERVER_NAME'])) {
+            $hosts[] = $serverParams['SERVER_NAME'];
+        }
+
+        foreach(array_unique($hosts) as $host) {
+            $url = self::getUrlFromHost($request, $host);
+            if ($url !== null) {
+                return $url;
+            }
+        }
+
+        return null;
+    }
+
     public static function getProtocol(ServerRequestInterface $request): string
     {
         if (self::isSecure($request)) {
@@ -92,5 +114,14 @@ class RequestUtil
     public static function setTrustedProxyIpHeader(string $trustedProxyIpHeader): void
     {
         self::$trustedProxyIpHeader = $trustedProxyIpHeader;
+    }
+
+    protected static function getUrlFromHost(ServerRequestInterface $request, string $host): string
+    {
+        if (str_contains($host, '://')) {
+            return BaseDir::addBaseDir($host);
+        }
+        $protocol = self::getProtocol($request);
+        return $protocol . '://' . BaseDir::addBaseDir($host);
     }
 }
