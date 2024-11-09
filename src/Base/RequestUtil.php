@@ -41,7 +41,7 @@ class RequestUtil
         return $ip;
     }
 
-    public static function getCurrentUrl(ServerRequestInterface $request): ?string
+    public static function getCurrentSite(ServerRequestInterface $request): ?string
     {
         $hosts = [];
         $serverParams = $request->getServerParams();
@@ -61,6 +61,19 @@ class RequestUtil
         }
 
         return null;
+    }
+
+    public static function getCurrentUrl(ServerRequestInterface $request): ?string
+    {
+        $serverParams = $request->getServerParams();
+
+        $site = BaseDir::removeBaseDir(self::getCurrentSite($request));
+        $url = $site . ($serverParams['REQUEST_URI'] ?? '');
+        $params = $serverParams['QUERY_STRING'] ?? '';
+        if ($params) {
+            return $url . '?' . $params;
+        }
+        return $url;
     }
 
     public static function getProtocol(ServerRequestInterface $request): string

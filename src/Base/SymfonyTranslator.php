@@ -28,6 +28,11 @@ class SymfonyTranslator implements TranslatorInterface
         return $this->translator->trans($message, $parameters, null, $locale);
     }
 
+    public function setLocale(string $locale): void
+    {
+        $this->translator->setLocale($locale);
+    }
+
     public function trans(string $id, array $parameters = [], string $domain = null, string $locale = null): string
     {
         return $this->translator->trans($id, $parameters, $domain, $locale);
