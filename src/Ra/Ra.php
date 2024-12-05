@@ -386,6 +386,24 @@ class Ra
     }
 
     /**
+     * @param array $targetArray
+     * @param scalar $findKey
+     * @return false|int The integer position of the key or false if not found
+     */
+    public static function getKeyPos(array $targetArray, mixed $findKey)
+    {
+        $pos = 0;
+        foreach ($targetArray as $key => $val) {
+            if ($key === $findKey) {
+                return $pos;
+            }
+            $pos++;
+        }
+
+        return false;
+    }
+
+    /**
      * Get or create the current to ArrayConverter
      *
      * @return ClassList or something that can be used as input to create one
@@ -398,6 +416,61 @@ class Ra
 
         return self::$_toArrayConverter;
     }
+
+    /**
+     * Insert a value after a certain key occurs (or at the end if it does not occur)
+     *
+     * @param array $targetArray The array to insert in
+     * @param scalar $afterKey The key to insert after
+     * @param mixed $value The value to insert
+     * @param scalar $keyValue The new key for the value
+     * @return array
+     */
+    public static function insertAfter(array $targetArray, $afterKey, $value, $keyValue = null)
+    {
+        if (null === $keyValue) {
+            $newArray[count($targetArray)] = $value;
+        } else {
+            $newArray[$keyValue] = $value;
+        }
+        $pos = self::getKeyPos($targetArray, $afterKey);
+
+        if (false === $pos) {
+            return $targetArray + $newArray;
+        }
+
+        array_splice($targetArray, $pos + 1, 0, $newArray);
+
+        return $targetArray;
+    }
+
+    /**
+     * Insert a value after a certain key occurs (or at the start if it does not not occur)
+     *
+     * @param array $targetArray The array to insert in
+     * @param scalar $beforeKey The key to insert before
+     * @param mixed $value The value to insert
+     * @param scalar $keyValue The new key for the value
+     * @return array
+     */
+    public static function insertBefore(array $targetArray, $beforeKey, $value, $keyValue = null)
+    {
+        if (null === $keyValue) {
+            $newArray[count($targetArray)] = $value;
+        } else {
+            $newArray[$keyValue] = $value;
+        }
+        $pos = self::getKeyPos($targetArray, $beforeKey);
+
+        if (false === $pos) {
+            return $newArray + $targetArray;
+        }
+
+        array_splice($targetArray, $pos, 0, $newArray);
+
+        return $targetArray;
+    }
+
 
     /**
      * Returns true if the $object either is an array or can be converted to an array.
