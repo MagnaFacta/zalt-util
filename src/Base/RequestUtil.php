@@ -24,6 +24,8 @@ class RequestUtil
 
     private static string $trustedProxyIpHeader = 'HTTP_X_FORWARDED_FOR';
 
+    private static string $trustedProxySchemeHeader = 'HTTP_X_FORWARDED_PROTO';
+
     public static function getClientIp(ServerRequestInterface $request): ?string
     {
         $serverParams = $request->getServerParams();
@@ -104,6 +106,10 @@ class RequestUtil
     public static function isSecure(ServerRequestInterface $request): bool
     {
         $serverParams = $request->getServerParams();
+        if (isset($serverParams[self::$trustedProxySchemeHeader])) {
+            return strtolower($serverParams[self::$trustedProxySchemeHeader]) === 'https';
+        }
+        // Kept for backwards compatibility of installations using SCHEME. Please set via setTrustedProxyScheme
         if (isset($serverParams['HTTP_X_FORWARDED_SCHEME'])) {
             return strtolower($serverParams['HTTP_X_FORWARDED_SCHEME']) === 'https';
         }
@@ -127,6 +133,11 @@ class RequestUtil
     public static function setTrustedProxyIpHeader(string $trustedProxyIpHeader): void
     {
         self::$trustedProxyIpHeader = $trustedProxyIpHeader;
+    }
+
+    public static function setTrustedProxyScheme(string $trustedProxySchemeHeader): void
+    {
+        self::$trustedProxySchemeHeader = $trustedProxySchemeHeader;
     }
 
     protected static function getUrlFromHost(ServerRequestInterface $request, string $host): string
