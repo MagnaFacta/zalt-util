@@ -48,7 +48,7 @@ class File
      */
     public static function cleanupName(string $filename): string
     {
-        return preg_replace('/[\|\\\?\*<\":>\+\[\]\/]\x00/', "_", $filename);
+        return preg_replace('/[\|\\\?\*<\":>\+\[\]\/\x00]/', "_", $filename);
     }
 
     /**
