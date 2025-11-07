@@ -4,7 +4,7 @@ namespace Zalt\Base;
 
 use Symfony\Component\Translation\Translator;
 
-class SymfonyTranslator implements TranslatorInterface
+class SymfonyTranslator implements TranslatorInterface, \Laminas\Validator\Translator\TranslatorInterface
 {
     public function __construct(protected readonly Translator $translator)
     {}
@@ -36,5 +36,14 @@ class SymfonyTranslator implements TranslatorInterface
     public function trans(string $id, array $parameters = [], string $domain = null, string $locale = null): string
     {
         return $this->translator->trans($id, $parameters, $domain, $locale);
+    }
+
+    public function translate($message, $textDomain = 'default', $locale = null)
+    {
+        if ($textDomain === 'default') {
+            return $this->translator->trans($message, [], null, $locale);
+        }
+
+        return $this->translator->trans($message, [], $textDomain, $locale);
     }
 }
