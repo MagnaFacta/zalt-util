@@ -308,7 +308,7 @@ class FileTest extends TestCase
     {
         return [
             'unix-root-path' => ['/', true],
-            'windows-absolute-path' => ['C:\\path\\to\\file', true],
+            'windows-absolute-path' => ['C:\\path\\to\\file', strtoupper(substr(PHP_OS, 0, 3)) === 'WIN'],
             'windows-relative-path' => ['path\\to\\file', false],
             'unix-relative-path' => ['path/to/file', false],
             'network-path' => ['\\\\server\\path', true],
