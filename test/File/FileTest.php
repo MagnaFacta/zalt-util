@@ -11,6 +11,8 @@ declare(strict_types=1);
 namespace Zalt\File;
 
 use PHPUnit\Framework\TestCase;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 /**
  * @package    Zalt
@@ -49,15 +51,88 @@ class FileTest extends TestCase
         $this->assertEquals(File::cleanupName($input), $output);
     }
 
+    public static function getFilesRecursiveDataProvider(): array
+    {
+        $tempDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'testGetFilesRecursive';
+
+        return [
+            'empty-directory' => [
+                'tempDir' => $tempDir . 'Empty',
+                'setupCallback' => function ($tempDir) {
+                    if (!is_dir($tempDir)) {
+                        mkdir($tempDir);
+                    }
+                },
+                'expected' => [],
+            ],
+            'directory-with-files' => [
+                'tempDir' => $tempDir . 'Files',
+                'setupCallback' => function ($tempDir) {
+                    if (!is_dir($tempDir)) {
+                        mkdir($tempDir);
+                    }
+                    file_put_contents($tempDir . DIRECTORY_SEPARATOR . 'file1.txt', 'test content');
+                    file_put_contents($tempDir . DIRECTORY_SEPARATOR . 'file2.txt', 'test content');
+                },
+                'expected' => [
+                    $tempDir . 'Files' . DIRECTORY_SEPARATOR . 'file1.txt',
+                    $tempDir . 'Files' . DIRECTORY_SEPARATOR . 'file2.txt',
+                ],
+            ],
+            'nested-directories' => [
+                'tempDir' => $tempDir . 'Nested',
+                'setupCallback' => function ($tempDir) {
+                    $nestedDir = $tempDir . DIRECTORY_SEPARATOR . 'subdir';
+                    if (!is_dir($nestedDir)) {
+                        mkdir($nestedDir, 0777, true);
+                    }
+                    file_put_contents($tempDir . DIRECTORY_SEPARATOR . 'file1.txt', 'test content');
+                    file_put_contents($tempDir . DIRECTORY_SEPARATOR . 'file2.txt', 'test content');
+                    file_put_contents($nestedDir . DIRECTORY_SEPARATOR . 'nested_file.txt', 'nested content');
+                },
+                'expected' => [
+                    $tempDir . 'Nested' . DIRECTORY_SEPARATOR . 'file1.txt',
+                    $tempDir . 'Nested' . DIRECTORY_SEPARATOR . 'file2.txt',
+                    $tempDir . 'Nested' . DIRECTORY_SEPARATOR . 'subdir' . DIRECTORY_SEPARATOR . 'nested_file.txt',
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider getFilesRecursiveDataProvider
+     */
+    public function testGetFilesRecursive(string $tempDir, callable $setupCallback, array $expected): void
+    {
+        $setupCallback($tempDir);
+
+        $result = File::getFilesRecursive($tempDir);
+
+        sort($result);
+        sort($expected);
+        $this->assertSame($expected, $result);
+
+        // Cleanup
+        $files = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($tempDir, RecursiveDirectoryIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::CHILD_FIRST
+        );
+
+        foreach ($files as $file) {
+            $file->isDir() ? rmdir($file->getRealPath()) : unlink($file->getRealPath());
+        }
+        rmdir($tempDir);
+    }
+
     public static function cleanupSlashesDataProvider(): array
     {
         return [
-            'unix-style'       => ['path/to/file', 'path' .  DIRECTORY_SEPARATOR . 'to' .  DIRECTORY_SEPARATOR . 'file'],
-            'windows-relative' => ['path\\to\\file', 'path' .  DIRECTORY_SEPARATOR . 'to' .  DIRECTORY_SEPARATOR . 'file'],
-            'mixed-relative'   => ['path\\to/file', 'path' .  DIRECTORY_SEPARATOR . 'to' .  DIRECTORY_SEPARATOR . 'file'], // Mixed (Windows -> Unix)
-            'windows-absolute' => ['C:\\path\\to\\file', 'C:' .  DIRECTORY_SEPARATOR . 'path' .  DIRECTORY_SEPARATOR . 'to' .  DIRECTORY_SEPARATOR . 'file'],
-            'mixed-absolute'   => ['/path\\to\\file', DIRECTORY_SEPARATOR . 'path' .  DIRECTORY_SEPARATOR . 'to' .  DIRECTORY_SEPARATOR . 'file'], // Mixed starting with Unix
-            'drive-absolute'   => ['C:/path/to/file', 'C:' .  DIRECTORY_SEPARATOR . 'path' .  DIRECTORY_SEPARATOR . 'to' .  DIRECTORY_SEPARATOR . 'file'], // Already cleaned
+            'unix-style' => ['path/to/file', 'path' . DIRECTORY_SEPARATOR . 'to' . DIRECTORY_SEPARATOR . 'file'],
+            'windows-relative' => ['path\\to\\file', 'path' . DIRECTORY_SEPARATOR . 'to' . DIRECTORY_SEPARATOR . 'file'],
+            'mixed-relative' => ['path\\to/file', 'path' . DIRECTORY_SEPARATOR . 'to' . DIRECTORY_SEPARATOR . 'file'], // Mixed (Windows -> Unix)
+            'windows-absolute' => ['C:\\path\\to\\file', 'C:' . DIRECTORY_SEPARATOR . 'path' . DIRECTORY_SEPARATOR . 'to' . DIRECTORY_SEPARATOR . 'file'],
+            'mixed-absolute' => ['/path\\to\\file', DIRECTORY_SEPARATOR . 'path' . DIRECTORY_SEPARATOR . 'to' . DIRECTORY_SEPARATOR . 'file'], // Mixed starting with Unix
+            'drive-absolute' => ['C:/path/to/file', 'C:' . DIRECTORY_SEPARATOR . 'path' . DIRECTORY_SEPARATOR . 'to' . DIRECTORY_SEPARATOR . 'file'], // Already cleaned
         ];
     }
 
@@ -227,5 +302,28 @@ class FileTest extends TestCase
         $result = File::getByteSized($input);
 
         $this->assertEquals($output, $result);
+    }
+
+    public static function isRootPathDataProvider(): array
+    {
+        return [
+            'unix-root-path' => ['/', true],
+            'windows-absolute-path' => ['C:\\path\\to\\file', true],
+            'windows-relative-path' => ['path\\to\\file', false],
+            'unix-relative-path' => ['path/to/file', false],
+            'network-path' => ['\\\\server\\path', true],
+            'http-url' => ['http://example.com', true],
+            'ftp-url' => ['ftp://example.com', true],
+            'empty-path' => ['', false],
+            'null-byte-path' => [chr(0) . 'path', false],
+        ];
+    }
+
+    /**
+     * @dataProvider isRootPathDataProvider
+     */
+    public function testIsRootPath(string $path, bool $expected): void
+    {
+        $this->assertSame($expected, File::isRootPath($path));
     }
 }

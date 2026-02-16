@@ -100,7 +100,10 @@ class Str
         // Replace all separator characters and whitespace by a single separator
         $title = preg_replace('!['.preg_quote($separator).'\s]+!u', $separator, $title);
 
-        return trim($title, $separator);
+        $title = trim($title, $separator);
+
+        setlocale(LC_ALL, $language);
+        return preg_replace('/["\'~^``]/', '', iconv(mb_internal_encoding(),'ASCII//TRANSLIT', $title)) ?: $title;
     }
 
     /**
@@ -116,11 +119,9 @@ class Str
             return static::$snakeCache[$key][$delimiter];
         }
 
-        if (! ctype_lower($value)) {
-            $value = preg_replace('/\s+/u', '', ucwords($value));
-
-            $value = static::lower(preg_replace('/(.)(?=[A-Z])/u', '$1'.$delimiter, $value));
-        }
+        $value = preg_replace('/(\W|[-_])/u', ' ', $value);
+        $value = preg_replace('/\s+/u', '', ucwords($value));
+        $value = static::lower(preg_replace('/(.)(?=[A-Z])/u', '$1'.$delimiter, $value));
 
         return static::$snakeCache[$key][$delimiter] = $value;
     }

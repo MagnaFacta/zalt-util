@@ -13,123 +13,174 @@ use PHPUnit\Framework\TestCase;
 class StrTest extends TestCase
 {
     /**
-     * Test that alphaNum removes non-alphanumeric characters without allowing spaces.
+     * Provides test cases for the alphaNum method.
+     *
+     * @return array<int, array{string, string, bool}>
      */
-    public function testAlphaNumRemovesNonAlphaNumericCharacters()
+    public static function alphaNumDataProvider(): array
     {
-        $input = 'Hello, World! 123.';
-        $expected = 'HelloWorld123';
-        $this->assertEquals($expected, Str::alphaNum($input));
-    }
-
-
-    /**
-     * Test that alphaNum retains alphanumeric characters and spaces when $allowSpaces is true.
-     */
-    public function testAlphaNumAllowsSpacesWhenFlagIsTrue()
-    {
-        $input = 'Hello, World! 123.';
-        $expected = 'Hello World 123';
-        $this->assertEquals($expected, Str::alphaNum($input, true));
+        return [
+            ['abc123!@#DEF', 'abc123DEF', false],
+            ['abc 123!@# DEF', 'abc 123 DEF', true],
+            ['!@#', '', false],
+            [' 123 ', ' 123 ', true],
+            ['', '', false],
+        ];
     }
 
     /**
-     * Test that alphaNum removes spaces when $allowSpaces is false.
+     * Test alphaNum using dataProvider.
+     *
+     * @dataProvider alphaNumDataProvider
      */
-    public function testAlphaNumRemovesSpacesWhenFlagIsFalse()
+    public function testAlphaNumWithDataProvider(string $input, string $expected, bool $allowSpaces): void
     {
-        $input = 'Hello World 123';
-        $expected = 'HelloWorld123';
-        $this->assertEquals($expected, Str::alphaNum($input, false));
+        $this->assertEquals($expected, Str::alphaNum($input, $allowSpaces));
     }
 
     /**
-     * Test that alphaNum processes an empty string correctly.
+     * Provides test cases for the camel method.
+     *
+     * @return array<int, array{string, string}>
      */
-    public function testAlphaNumHandlesEmptyString()
+    public static function camelDataProvider(): array
     {
-        $input = '';
-        $expected = '';
-        $this->assertEquals($expected, Str::alphaNum($input));
+        return [
+            ['hello_world', 'helloWorld'],
+            ['hello_world', 'helloWorld'], // Check cache
+            ['Hello_world', 'helloWorld'],
+            ['hello World', 'helloWorld'],
+            ['hello-world', 'helloWorld'],
+            ['HELLO_WORLD', 'hELLOWORLD'],
+            ['  hello   world  ', 'helloWorld'],
+            ['', ''],
+        ];
     }
 
     /**
-     * Test that alphaNum retains only alphabetic characters when no digits or symbols are present.
+     * Test camel using dataProvider.
+     *
+     * @dataProvider camelDataProvider
      */
-    public function testAlphaNumHandlesAlphabeticInput()
+    public function testCamelWithDataProvider(string $input, string $expected): void
     {
-        $input = 'JustSimpleText';
-        $expected = 'JustSimpleText';
-        $this->assertEquals($expected, Str::alphaNum($input));
-    }
-
-    /**
-     * Test that alphaNum retains only numeric characters when no letters or symbols are present.
-     */
-    public function testAlphaNumHandlesNumericInput()
-    {
-        $input = '1234567890';
-        $expected = '1234567890';
-        $this->assertEquals($expected, Str::alphaNum($input));
-    }
-
-    /**
-     * Test that alphaNum removes all characters from a string with no alphanumeric content.
-     */
-    public function testAlphaNumRemovesAllNonAlphaNumericContent()
-    {
-        $input = '!@#$%^&*()_+-=[]{}|;:",.<>?/`~';
-        $expected = '';
-        $this->assertEquals($expected, Str::alphaNum($input));
-    }
-
-    /**
-     * Test that camel converts strings with spaces to camel case.
-     */
-    public function testCamelConvertsSpacesToCamelCase()
-    {
-        $input = 'hello world example';
-        $expected = 'helloWorldExample';
         $this->assertEquals($expected, Str::camel($input));
     }
 
     /**
-     * Test that camel converts strings with dashes to camel case.
+     * Provides test cases for the kebab method.
+     *
+     * @return array<int, array{string, string}>
      */
-    public function testCamelConvertsDashesToCamelCase()
+    public static function kebabDataProvider(): array
     {
-        $input = 'hello-world-example';
-        $expected = 'helloWorldExample';
-        $this->assertEquals($expected, Str::camel($input));
+        return [
+            ['hello_world', 'hello-world'],
+            ['Hello_world', 'hello-world'],
+            ['Hello_world', 'hello-world'], // Check cache
+            ['hello World', 'hello-world'],
+            ['hello-world', 'hello-world'],
+            ['HELLO_WORLD', 'h-e-l-l-o-w-o-r-l-d'],
+            ['  hello   world  ', 'hello-world'],
+            ['', ''],
+        ];
     }
 
     /**
-     * Test that camel converts strings with underscores to camel case.
+     * Test kebab using dataProvider.
+     *
+     * @dataProvider kebabDataProvider
      */
-    public function testCamelConvertsUnderscoresToCamelCase()
+    public function testKebabWithDataProvider(string $input, string $expected): void
     {
-        $input = 'hello_world_example';
-        $expected = 'helloWorldExample';
-        $this->assertEquals($expected, Str::camel($input));
+        $this->assertEquals($expected, Str::kebab($input));
     }
 
     /**
-     * Test that camel does not change already camel-cased strings.
+     * Provides test cases for the lower method.
+     *
+     * @return array<int, array{string|null, string}>
      */
-    public function testCamelUnchangedForCamelCaseInput()
+    public static function lowerDataProvider(): array
     {
-        $input = 'helloWorldExample';
-        $expected = 'helloWorldExample';
-        $this->assertEquals($expected, Str::camel($input));
+        return [
+            ['HELLO', 'hello'],
+            ['Hello WORLD', 'hello world'],
+            ['123ABC!@#', '123abc!@#'],
+            ['HeLlO_wOrLd', 'hello_world'],
+            ['HëLlO_wOrLd', 'hëllo_world'],
+            ['HËLlO_wOrLd', 'hëllo_world'],
+            [null, ''],
+            ['', ''],
+        ];
     }
 
     /**
-     * Test that camel handles empty string input correctly.
+     * Test lower using dataProvider.
+     *
+     * @dataProvider lowerDataProvider
      */
-    public function testCamelHandlesEmptyString()
+    public function testLowerWithDataProvider(?string $input, string $expected): void
     {
-        $input = '';
-        $expected = '';
-        $this->assertEquals($expected, Str::camel($input));
+        $this->assertEquals($expected, Str::lower($input));
+    }
+
+    /**
+     * Provides test cases for the pascal method.
+     *
+     * @return array<int, array{string, string}>
+     */
+    public static function pascalDataProvider(): array
+    {
+        return [
+            ['hello_world', 'HelloWorld'],
+            ['Hello_world', 'HelloWorld'],
+            ['hello World', 'HelloWorld'],
+            ['hello-world', 'HelloWorld'],
+            ['  hello   world  ', 'HelloWorld'],
+            ['HELLO_WORLD', 'HELLOWORLD'],
+            ['', ''],
+        ];
+    }
+
+    /**
+     * Test pascal using dataProvider.
+     *
+     * @dataProvider pascalDataProvider
+     */
+    public function testPascalWithDataProvider(string $input, string $expected): void
+    {
+        $this->assertEquals($expected, Str::pascal($input));
+    }
+
+    /**
+     * Provides test cases for the slug method.
+     *
+     * @return array<int, array{string, string, string, array<string, string>}>
+     */
+    public static function slugDataProvider(): array
+    {
+        return [
+            ['hëllo world!', 'hello-world', '-', []],
+            ['hello_world', 'hello-world', '-', []],
+            ['Hello@world', 'hello-at-world', '-', ['@' => 'at']],
+            ['  hello   world  ', 'hello-world', '-', []],
+            ['spËcial_chars', 'special-chars', '-', []],
+            ['example/test_case', 'exampletest-case', '-', []],
+            ['example/test_case', 'exampletest_case', '_', []],
+            ['Multiple@Words@Here', 'multiple-and-words-and-here', '-', ['@' => 'and']],
+            ['Custom@Dictionary', 'custom-separator-dictionary', '-', ['@' => 'separator']],
+            [ "á|â|à|å|ä ð|é|ê|è|ë í|î|ì|ï ó|ô|ò|ø|õ|ö ú|û|ù|ü æ ç ß abc ABC 123",  "aaaaa-deeee-iiii-oooooo-uuuu-ae-c-ss-abc-abc-123", '-', []]
+        ];
+    }
+
+    /**
+     * Test slug using dataProvider.
+     *
+     * @dataProvider slugDataProvider
+     */
+    public function testSlugWithDataProvider(string $input, string $expected, string $separator, array $dictionary): void
+    {
+        $this->assertEquals($expected, Str::slug($input, $separator, 'en', $dictionary));
     }
 }

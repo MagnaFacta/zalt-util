@@ -224,10 +224,13 @@ class File
         }
         // One more check for windows
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            return preg_match('#^[a-zA-Z]:\\\\#', $path);
+            $withDrive = (bool) preg_match('#^[a-zA-Z]:\\\\#', $path);
+            if ($withDrive) {
+                 return true;
+            }
         }
         // The check for uri's (frp, http, https
-        return preg_match('#^[a-zA-Z]+://#', $path);
+        return (bool) preg_match('#^[a-zA-Z]+://#', $path);
     }
 
     /**

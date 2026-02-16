@@ -597,7 +597,6 @@ class Ra
         $i = 0;
         $converter = self::getToArrayConverter();
         while (is_object($object) && ($function = $converter->get($object))) {
-
             if (method_exists($object, $function)) {
                 $object = call_user_func(array($object, $function));
             } else {
