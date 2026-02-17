@@ -13,9 +13,7 @@ namespace Zalt\Mock;
 
 use GuzzleHttp\Psr7\ServerRequest;
 use Mezzio\Flash\FlashMessageMiddleware;
-use Mezzio\Session\Cache\CacheSessionPersistence;
 use Mezzio\Session\SessionMiddleware;
-use Mezzio\Session\SessionPersistenceInterface;
 
 /**
  *
@@ -25,7 +23,7 @@ use Mezzio\Session\SessionPersistenceInterface;
  */
 class SimpleFlashRequestFactory implements InvokeWithoutServiceManager
 {
-    static public function createWithoutServiceManager(string $url = '/')
+    static public function createWithoutServiceManager(string $url = '/'): ServerRequest
     {
         $request = new ServerRequest('GET', $url);
 

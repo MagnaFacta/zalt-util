@@ -22,7 +22,7 @@ use Mezzio\Session\Cache\CacheSessionPersistence;
  */
 class SimpleCacheSessionPersistenceFactory implements InvokeWithoutServiceManager
 {
-    static public function createWithoutServiceManager()
+    static public function createWithoutServiceManager(): CacheSessionPersistence
     {
         return new CacheSessionPersistence(
             new NullAdapter(),

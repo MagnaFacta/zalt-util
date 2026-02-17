@@ -11,9 +11,24 @@ This group also contains the RequestInfo object, which is a lightweight alternat
 and contains only scalar variables (so no objects). To create it from a request object, use/create a RequestInfoFactory
 static creation function for your type of Request object.
 
+## File
+
+Standaard file handling functions for working with temporary files, assessing file names and paths, creating masks for 
+file selections, etc...
+
+## Iterator
+
+Extra standard iterator objects.
+
 ## Lists
 
 Simple lookup lists that return something (or null) on a key. With sub objects for use with functions and objects.
+
+## Message
+
+Standard wrapper message objects for handing messages using standard objects from other library.
+
+A message is stated as some text that has to be displayed to the user, even after redirection to another page.
 
 ## Mock
 
@@ -29,4 +44,6 @@ as one (the MultiWrapper).
 The Ra class contains static array processing functions that are used to give PHP some Python and Haskell like
 parameter processing functionality, though a lot of that is already possible in PHP 8.1.
 
+## String
 
+Simple string manipulation functions not in PHP.

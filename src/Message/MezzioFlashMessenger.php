@@ -29,30 +29,23 @@ class MezzioFlashMessenger implements StatusMessengerInterface
     )
     { }
 
-    public function addMessage(string $message, MessageStatus $status = MessageStatus::Info, bool $now = false): void
+    public function addMessage(string $message, MessageStatus $status = MessageStatus::Info): void
     {
-        $this->addMessages([$message], $status, $now);
+        $this->addMessages([$message], $status);
     }
 
-    public function addMessages(array $messages, MessageStatus $status=MessageStatus::Info, bool $now = false): void
+    public function addMessages(array $messages, MessageStatus $status=MessageStatus::Info): void
     {
         $storedMessages = $this->messenger->getFlash(static::FLASH_KEY, []);
 
         $storedMessages[$status->value] = array_merge($storedMessages[$status->value] ?? [], $messages);
 
-        if ($now) {
-            $this->messenger->flashNow(static::FLASH_KEY, $storedMessages, 0);
-            return;
-        }
-        $this->messenger->flash(static::FLASH_KEY, $storedMessages);
+        $this->messenger->flashNow(static::FLASH_KEY, $storedMessages, 0);
+        return;
     }
 
-    public function clearMessages(bool $now = true): void
+    public function clearMessages(): void
     {
-        if (!$now) {
-            $this->messenger->flash(static::FLASH_KEY, []);
-            return;
-        }
         $this->messenger->flashNow(static::FLASH_KEY, [],0);
     }
 
