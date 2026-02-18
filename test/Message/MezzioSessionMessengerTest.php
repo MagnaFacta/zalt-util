@@ -36,6 +36,48 @@ class MezzioSessionMessengerTest extends TestCase
                     MessageStatus::Warning->value => ['Test message']
                 ]
             ],
+            'single message, default status' => [
+                'message' => 'Test message',
+                'status' => MessageStatus::Info,
+                'existingMessages' => [],
+                'expectedMessages' => [
+                    MessageStatus::Info->value => ['Test message'],
+                ]
+            ],
+            'multiple messages, warning status' => [
+                'message' => 'Warning 1',
+                'status' => MessageStatus::Warning,
+                'existingMessages' => [],
+                'expectedMessages' => [
+                    MessageStatus::Warning->value => ['Warning 1'],
+                ]
+            ],
+            'append to existing messages' => [
+                'message' => 'New info message',
+                'status' => MessageStatus::Info,
+                'existingMessages' => [
+                    MessageStatus::Info->value => ['Old info message']
+                ],
+                'expectedMessages' => [
+                    MessageStatus::Info->value => ['Old info message', 'New info message'],
+                ]
+            ],
+            'danger with messages' => [
+                'message' => 'Immediate message',
+                'status' => MessageStatus::Danger,
+                'existingMessages' => [],
+                'expectedMessages' => [
+                    MessageStatus::Danger->value => ['Immediate message'],
+                ]
+            ],
+            'success with messages' => [
+                'message' => 'Immediate message',
+                'status' => MessageStatus::Success,
+                'existingMessages' => [],
+                'expectedMessages' => [
+                    MessageStatus::Success->value => ['Immediate message'],
+                ]
+            ],
         ];
     }
 
@@ -52,8 +94,139 @@ class MezzioSessionMessengerTest extends TestCase
             $this->messenger->addMessage($message);
         }
 
+        $this->messenger->prolong();
         $this->assertEquals($expectedMessages, $this->messenger->getMessages());
     }
+
+    /**
+     * @dataProvider addMessageDataProvider
+     */
+    public function testAddTrait(string $message, ?MessageStatus $status, array $existingMessages, array $expectedMessages): void
+    {
+        $this->session->set(MezzioSessionMessenger::SESSION_KEY, $existingMessages);
+
+        switch ($status) {
+            case MessageStatus::Info:
+                $this->messenger->addInfo($message);
+                break;
+
+            case MessageStatus::Danger:
+                $this->messenger->addDanger($message);
+                break;
+
+            case MessageStatus::Warning:
+                $this->messenger->addWarning($message);
+                break;
+
+            case MessageStatus::Success:
+                $this->messenger->addSuccess($message);
+                break;
+
+            default:
+                $this->messenger->addMessage($message);
+                break;
+        }
+
+        $this->assertEquals($expectedMessages, $this->messenger->getMessages());
+    }
+
+    /**
+     * @dataProvider addMessageDataProvider
+     */
+    public function testAddTraits(string $message, ?MessageStatus $status, array $existingMessages, array $expectedMessages): void
+    {
+        $this->session->set(MezzioSessionMessenger::SESSION_KEY, $existingMessages);
+
+        switch ($status) {
+            case MessageStatus::Info:
+                $this->messenger->addInfos([$message]);
+                break;
+
+            case MessageStatus::Danger:
+                $this->messenger->addDangers([$message]);
+                break;
+
+            case MessageStatus::Warning:
+                $this->messenger->addWarnings([$message]);
+                break;
+
+            case MessageStatus::Success:
+                $this->messenger->addSuccesses([$message]);
+                break;
+
+            default:
+                $this->messenger->addMessages([$message]);
+                break;
+        }
+
+        $this->assertEquals($expectedMessages, $this->messenger->getMessages());
+    }
+
+    /**
+     * @dataProvider addMessageDataProvider
+     */
+    public function testAddErrorTrait(string $message, ?MessageStatus $status, array $existingMessages, array $expectedMessages): void
+    {
+        $this->session->set(MezzioSessionMessenger::SESSION_KEY, $existingMessages);
+
+        switch ($status) {
+            case MessageStatus::Info:
+                $this->messenger->addInfo($message);
+                break;
+
+            case MessageStatus::Danger:
+                $this->messenger->addError($message);
+                break;
+
+            case MessageStatus::Warning:
+                $this->messenger->addWarning($message);
+                break;
+
+            case MessageStatus::Success:
+                $this->messenger->addSuccess($message);
+                break;
+
+            default:
+                $this->messenger->addMessage($message);
+                break;
+        }
+
+        $this->assertEquals($expectedMessages, $this->messenger->getMessages());
+
+    }
+
+    /**
+     * @dataProvider addMessageDataProvider
+     */
+    public function testAddErrorTraits(string $message, ?MessageStatus $status, array $existingMessages, array $expectedMessages): void
+    {
+        $this->session->set(MezzioSessionMessenger::SESSION_KEY, $existingMessages);
+
+        switch ($status) {
+            case MessageStatus::Info:
+                $this->messenger->addInfos([$message]);
+                break;
+
+            case MessageStatus::Danger:
+                $this->messenger->addErrors([$message]);
+                break;
+
+            case MessageStatus::Warning:
+                $this->messenger->addWarnings([$message]);
+                break;
+
+            case MessageStatus::Success:
+                $this->messenger->addSuccesses([$message]);
+                break;
+
+            default:
+                $this->messenger->addMessages([$message]);
+                break;
+        }
+
+        $this->assertEquals($expectedMessages, $this->messenger->getMessages());
+    }
+
 
     public function testAddMessageAppendsToExistingMessages(): void
     {

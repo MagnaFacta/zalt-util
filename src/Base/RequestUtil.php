@@ -87,8 +87,11 @@ class RequestUtil
         return 'http';
     }
 
-    public static function isFromTrustedProxy(string $ip): bool
+    public static function isFromTrustedProxy(?string $ip): bool
     {
+        if (! $ip) {
+            return false;
+        }
         if (!self::$trustedProxies) {
             return false;
         }

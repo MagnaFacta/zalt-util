@@ -12,6 +12,7 @@ class MezzioSessionMessenger implements StatusMessengerInterface
 
     public function __construct(protected SessionInterface $session)
     {}
+
     public function addMessage(string $message, MessageStatus $status = MessageStatus::Info): void
     {
         $this->addMessages([$message], $status);
