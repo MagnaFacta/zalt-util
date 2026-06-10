@@ -9,7 +9,7 @@ class SymfonyTranslator implements TranslatorInterface, \Laminas\Validator\Trans
     public function __construct(protected readonly Translator $translator)
     {}
 
-    public function _(?string $id, array $parameters = [], string $domain = null, string $locale = null): string
+    public function _(?string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string
     {
         return $this->translator->trans($id, $parameters, $domain, $locale);
     }
@@ -33,7 +33,7 @@ class SymfonyTranslator implements TranslatorInterface, \Laminas\Validator\Trans
         $this->translator->setLocale($locale);
     }
 
-    public function trans(string $id, array $parameters = [], string $domain = null, string $locale = null): string
+    public function trans(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string
     {
         return $this->translator->trans($id, $parameters, $domain, $locale);
     }

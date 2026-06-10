@@ -21,7 +21,7 @@ class BaseDir
 {
     protected static ?string $baseDir = null;
 
-    public static function addBaseDir(string $hostUrl, string $baseDir = null)
+    public static function addBaseDir(string $hostUrl, null|string $baseDir = null)
     {
         if (! $baseDir) {
             $baseDir = self::getBaseDir();

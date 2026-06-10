@@ -47,7 +47,7 @@ interface TranslatorInterface extends \Symfony\Contracts\Translation\TranslatorI
      *
      * @throws \InvalidArgumentException If the locale contains invalid characters
      */
-    public function _(?string $id, array $parameters = [], string $domain = null, string $locale = null): string;
+    public function _(?string $id, array $parameters = [], null|string $domain = null, null|string $locale = null): string;
 
     /**
      *

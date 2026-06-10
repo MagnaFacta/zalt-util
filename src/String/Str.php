@@ -53,7 +53,7 @@ class Str
     /**
      * Convert a string to kebab case.
      */
-    public static function kebab(string $value = null): string
+    public static function kebab(?string $value = null): string
     {
         return static::snake($value, '-');
     }
@@ -61,7 +61,7 @@ class Str
     /**
      * A UTF-8 safe version of strtolower()
      */
-    public static function lower(string $string = null): string
+    public static function lower(?string $string = null): string
     {
         return mb_strtolower($string ?? '', 'UTF-8');
     }
@@ -110,7 +110,7 @@ class Str
      * Convert a string to snake case.
      */
     public static function snake(
-        string $value = null,
+        ?string $value = null,
         string $delimiter = '_'
     ): string {
         $key = $value;

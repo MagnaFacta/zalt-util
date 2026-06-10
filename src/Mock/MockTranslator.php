@@ -20,7 +20,7 @@ class MockTranslator implements \Zalt\Base\TranslatorInterface
     /**
      * @inheritDoc
      */
-    public function trans(string $id, array $parameters = [], string $domain = null, string $locale = null): string
+    public function trans(string $id, array $parameters = [], null|string $domain = null, ?string $locale = null): string
     {
         return $id;
     }
@@ -33,7 +33,7 @@ class MockTranslator implements \Zalt\Base\TranslatorInterface
         return 'en';
     }
 
-    public function _(?string $id, array $parameters = [], string $domain = null, string $locale = null): string
+    public function _(?string $id, array $parameters = [], null|string $domain = null, null|string $locale = null): string
     {
         return $id ?? '';
     }
