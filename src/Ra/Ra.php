@@ -484,7 +484,7 @@ class Ra
             return true;
         }
 
-        return (boolean) self::getToArrayConverter()->get($object);
+        return (bool) self::getToArrayConverter()->get($object);
     }
 
     /**
